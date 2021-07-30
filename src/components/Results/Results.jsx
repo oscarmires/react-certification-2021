@@ -3,9 +3,9 @@ import { CardsGrid, Card, Thumbnail, ThumbnailImg, InfoArea } from './Results.co
 
 const Results = ({ searchResultItems }) => {
   const cards = searchResultItems.map((item) => (
-    <Card>
+    <Card key={item.etag}>
       <Thumbnail>
-        <ThumbnailImg src={item.snippet.thumbnails.medium.url} />
+        <ThumbnailImg src={item.snippet.thumbnails.medium.url} alt={item.snippet.title} />
       </Thumbnail>
       <InfoArea>
         <h2 style={{ margin: '5px 0' }}>{item.snippet.title}</h2>

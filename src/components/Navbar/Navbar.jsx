@@ -11,11 +11,11 @@ import {
 
 const Navbar = () => {
   return (
-    <header style={{ position: 'fixed', width: '100%' }}>
+    <header style={{ position: 'fixed', width: '100%' }} data-testid="header">
       <Nav>
         <Left>
           <BurgerMenuButton />
-          <SearchBar />
+          <SearchBar data-testid="search-bar" />
         </Left>
         <Right>
           <Hidden xsDown>
@@ -28,7 +28,7 @@ const Navbar = () => {
             </FormGroup>
           </Hidden>
           <UserProfileButton>
-            <i class="fas fa-user fa-2x" style={{ color: '#333' }}></i>
+            <i className="fas fa-user fa-2x" style={{ color: '#333' }}></i>
           </UserProfileButton>
         </Right>
       </Nav>

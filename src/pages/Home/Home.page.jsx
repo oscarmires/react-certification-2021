@@ -6,7 +6,7 @@ import { items } from '../../mock/youtube-videos-mock.json';
 function HomePage() {
   return (
     <>
-      <Navbar />
+      <Navbar data-testid="navbar" />
       <HomeArea>
         <Title>React Challenge</Title>
         <Results searchResultItems={items} />

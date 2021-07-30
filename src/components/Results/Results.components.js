@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  width: 340px;
+  width: 300px;
   height: 400px;
   background-color: white;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 1px 1px 5px #ccc;
   margin: 10px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
 `;
 
 export const InfoArea = styled.div`
