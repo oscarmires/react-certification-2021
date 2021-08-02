@@ -9,7 +9,7 @@ function HomePage() {
       <Navbar data-testid="navbar" />
       <HomeArea>
         <Title>React Challenge</Title>
-        <Results searchResultItems={items} />
+        <Results resultItems={items} />
       </HomeArea>
     </>
   );

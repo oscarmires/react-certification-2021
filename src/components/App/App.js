@@ -6,10 +6,10 @@ import HomePage from '../../pages/Home/Home.page';
 
 function App() {
   return (
-    <div className="App">
+    <>
       <GlobalStyles />
       <HomePage />
-    </div>
+    </>
   );
 }
 
