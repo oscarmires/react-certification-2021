@@ -9,7 +9,7 @@ import {
   UserProfileButton,
 } from './Navbar.components';
 
-const Navbar = () => {
+const Navbar = ({ handleTheme }) => {
   return (
     <header style={{ position: 'fixed', width: '100%' }} data-testid="header">
       <Nav>
@@ -21,7 +21,7 @@ const Navbar = () => {
           <Hidden xsDown>
             <FormGroup>
               <FormControlLabel
-                control={<ThemeSwitch />}
+                control={<ThemeSwitch activateDarkTheme={handleTheme} />}
                 label="Dark mode"
                 style={{ color: 'white' }}
               />

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Navbar, Results } from '../../components';
-import { HomeArea, Title } from './Home.components';
+import { HomeArea } from './Home.components';
 import { items } from '../../mock/youtube-videos-mock.json';
 
-function HomePage() {
+function HomePage({ handleTheme }) {
   return (
     <>
-      <Navbar data-testid="navbar" />
+      <Navbar data-testid="navbar" handleTheme={handleTheme} />
       <HomeArea>
-        <Title>React Challenge</Title>
+        <h1>React Challenge</h1>
         <Results resultItems={items} />
       </HomeArea>
     </>

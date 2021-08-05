@@ -1,12 +1,17 @@
 import React from 'react';
 import Switch from '@material-ui/core/Switch';
 
-export default function MaterialuiSwitch({ inputProps }) {
-  const [state, setState] = React.useState(false);
+export default function MaterialuiSwitch({ activateDarkTheme }) {
+  const [isEnabled, setIsEnabled] = React.useState(false);
 
   function handleSwitchChange(e) {
-    setState(e.target.checked);
+    activateDarkTheme(!isEnabled);
+    if (isEnabled) {
+      setIsEnabled(false);
+    } else {
+      setIsEnabled(true);
+    }
   }
 
-  return <Switch checked={state} onChange={handleSwitchChange} inputProps={inputProps} />;
+  return <Switch checked={isEnabled} onChange={handleSwitchChange} />;
 }

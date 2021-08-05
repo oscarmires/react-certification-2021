@@ -12,7 +12,7 @@ const VideoCard = ({ videoItem }) => {
         />
       </Thumbnail>
       <InfoArea>
-        <h2 style={{ margin: '5px 0' }}>{videoItem.snippet.title}</h2>
+        <h2>{videoItem.snippet.title}</h2>
         <p>{videoItem.snippet.description}</p>
       </InfoArea>
     </Card>

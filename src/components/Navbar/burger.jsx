@@ -1,6 +1,7 @@
 import React from 'react';
+import { withTheme } from 'styled-components';
 
-const Burger = ({ className }) => (
+const Burger = ({ className, theme }) => (
   <button className={className}>
     <svg
       width="30px"
@@ -9,11 +10,11 @@ const Burger = ({ className }) => (
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill="#fff"
+        fill={theme.btnBurgerFill}
         d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"
       />
     </svg>
   </button>
 );
 
-export default Burger;
+export default withTheme(Burger);
