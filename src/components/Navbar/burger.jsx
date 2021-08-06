@@ -4,8 +4,8 @@ import { withTheme } from 'styled-components';
 const Burger = ({ className, theme }) => (
   <button className={className}>
     <svg
-      width="30px"
-      height="30px"
+      width="40px"
+      height="40px"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >

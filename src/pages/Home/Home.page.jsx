@@ -1,15 +1,25 @@
 import React from 'react';
-import { Navbar, Results } from '../../components';
+import { Navbar, SearchResultsGrid } from '../../components';
 import { HomeArea } from './Home.components';
-import { items } from '../../mock/youtube-videos-mock.json';
 
-function HomePage({ handleTheme }) {
+function HomePage({
+  handleTheme,
+  updateSearchKeyword,
+  searchKeyword,
+  YouTubeData,
+  updateVideos,
+}) {
   return (
     <>
-      <Navbar data-testid="navbar" handleTheme={handleTheme} />
+      <Navbar
+        data-testid="navbar"
+        handleTheme={handleTheme}
+        updateVideos={updateVideos}
+        updateSearchKeyword={updateSearchKeyword}
+      />
       <HomeArea>
         <h1>React Challenge</h1>
-        <Results resultItems={items} />
+        <SearchResultsGrid resultItems={YouTubeData} searchKeyword={searchKeyword} />
       </HomeArea>
     </>
   );
