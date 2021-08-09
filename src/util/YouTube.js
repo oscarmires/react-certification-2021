@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 export function gapiLoadClient() {
   const loadClient = () => {
     window.gapi.client.setApiKey(process.env.REACT_APP_YOUTUBE_API_KEY);
@@ -29,4 +31,44 @@ export const executeSearch = async function (keyword) {
     console.log(error);
     return null;
   }
+};
+
+export const useYouTubePlayer = (videoId) => {
+  useEffect(() => {
+    // a. This code loads the IFrame Player API code asynchronously.
+    const existingScript = document.getElementById('iframe-script');
+
+    if (existingScript) {
+      // if YT api already loaded
+      document.head.removeChild(existingScript);
+    }
+
+    let tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    tag.id = 'iframe-script';
+
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // b. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+
+    // eslint-disable-next-line
+    function onYouTubeIframeAPIReady() {
+      window.player = new window.YT.Player('player', {
+        videoId: videoId,
+        events: {
+          onReady: onPlayerReady,
+        },
+      });
+    }
+
+    // c. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    window.onPlayerReady = onPlayerReady;
+  });
 };

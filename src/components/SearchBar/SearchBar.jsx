@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { SearchInput, Bar } from './SearchBar.components';
 import { executeSearch } from '../../util/YouTube';
 
-const SearchBar = ({ updateVideos, updateSearchKeyword }) => {
+const SearchBar = ({ updateVideos, setCurrentPage, updateSearchKeyword }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleEnter = async (e) => {
     if (e.keyCode === 13) {
       const searchResults = await executeSearch(e.target.value);
-      updateVideos(searchResults);
+      setCurrentPage('Home');
       updateSearchKeyword(inputValue);
+      updateVideos(searchResults);
       setInputValue('');
     }
   };

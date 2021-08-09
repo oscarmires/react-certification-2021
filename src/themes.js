@@ -42,6 +42,8 @@ export const lightTheme = {
 
   /* header */
   headerBackgroundColor: '#555',
+  searchBarBackgroundColor: '#444',
+  searchBarOnHOver: '#666',
 
   /* Cards */
   boxOnHover: '#eee',
@@ -49,6 +51,10 @@ export const lightTheme = {
   /* button */
   btnBurgerFill: '#fff',
   btnOnHover: 'gray',
+
+  /* VideoListItems */
+  itemOnHover: '#ddd',
+  borderColor: '#ccc',
 };
 
 export const darkTheme = {
@@ -60,6 +66,8 @@ export const darkTheme = {
 
   /* header */
   headerBackgroundColor: '#333',
+  searchBarBackgroundColor: '#2A2A2A',
+  searchBarOnHOver: '#444',
 
   /* Cards */
   boxOnHover: '#444',
@@ -67,4 +75,8 @@ export const darkTheme = {
   /* button */
   btnBurgerFill: '#eee',
   btnOnHover: '#444',
+
+  /* VideoListItems */
+  itemOnHover: '#444',
+  borderColor: '#444',
 };

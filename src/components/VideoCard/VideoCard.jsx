@@ -2,9 +2,14 @@ import React from 'react';
 
 import { Card, InfoArea, Thumbnail, ThumbnailImg } from './VideoCard.components';
 
-const VideoCard = ({ videoItem }) => {
+const VideoCard = ({ videoItem, index, setCurrentPage, setSelectedVideoIndex }) => {
+  const handleClick = (e) => {
+    setCurrentPage('VideoDetails');
+    setSelectedVideoIndex(index);
+  };
+
   return (
-    <Card key={videoItem.etag}>
+    <Card key={videoItem.etag} data-testid="card-div" onClick={handleClick}>
       <Thumbnail>
         <ThumbnailImg
           src={videoItem.snippet.thumbnails.medium.url}

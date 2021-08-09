@@ -9,15 +9,22 @@ import {
   UserProfileButton,
 } from './Navbar.components';
 
-const Navbar = ({ handleTheme, updateVideos, updateSearchKeyword }) => {
+const Navbar = ({
+  darkThemeEnabled,
+  toggleTheme,
+  updateVideos,
+  setCurrentPage,
+  updateSearchKeyword,
+}) => {
   return (
-    <header style={{ position: 'fixed', width: '100%' }} data-testid="header">
+    <header style={{ position: 'fixed', width: '100%', zIndex: 1 }} data-testid="header">
       <Nav>
         <Left>
           <BurgerMenuButton />
           <SearchBar
             data-testid="search-bar"
             updateVideos={updateVideos}
+            setCurrentPage={setCurrentPage}
             updateSearchKeyword={updateSearchKeyword}
           />
         </Left>
@@ -25,7 +32,12 @@ const Navbar = ({ handleTheme, updateVideos, updateSearchKeyword }) => {
           <Hidden xsDown>
             <FormGroup>
               <FormControlLabel
-                control={<ThemeSwitch activateDarkTheme={handleTheme} />}
+                control={
+                  <ThemeSwitch
+                    toggleTheme={toggleTheme}
+                    darkThemeEnabled={darkThemeEnabled}
+                  />
+                }
                 label="Dark mode"
                 style={{ color: 'white' }}
               />

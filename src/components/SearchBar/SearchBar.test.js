@@ -21,4 +21,6 @@ describe('SearchBar', () => {
 
     expect(inputElement.value).toMatch('');
   });
+
+  it('retrieves data from API', () => {});
 });

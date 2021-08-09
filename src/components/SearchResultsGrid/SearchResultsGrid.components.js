@@ -14,6 +14,7 @@ export const BackgroundText = styled.p`
   color: gray;
   margin-top: 100px;
   padding: 20px;
+  text-align: center;
 
   @media only screen and (max-width: 600px) {
     margin-top: 20px;
