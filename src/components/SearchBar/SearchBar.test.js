@@ -12,12 +12,15 @@ describe('SearchBar', () => {
     expect(inputElement).toBeInTheDocument();
   });
 
-  it('changes text when typed into', () => {
+  it('erases typed text on key down', () => {
     const typedText = 'abcde';
 
     const inputElement = screen.getByPlaceholderText(/search/i);
     fireEvent.change(inputElement, { target: { value: typedText } });
+    fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter' });
 
-    expect(inputElement.value).toBe(typedText);
+    expect(inputElement.value).toMatch('');
   });
+
+  it('retrieves data from API', () => {});
 });

@@ -4,8 +4,8 @@ import Burger from './burger';
 export const Nav = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: #555;
-  box-shadow: 0 1px 5px grey;
+  background-color: ${(props) => props.theme.headerBackgroundColor};
+  box-shadow: 0 3px 5px ${(props) => props.theme.shadowColor};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,11 +34,11 @@ export const BurgerMenuButton = styled(Burger)`
   justify-content: center;
   border-radius: 8px;
   border: none;
-  background-color: #555;
+  background-color: transparent;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: gray;
+    background-color: ${(props) => props.theme.btnOnHover};
     cursor: pointer;
   }
 `;
