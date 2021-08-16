@@ -2,13 +2,15 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { VideoCard } from '../';
 
-import { items } from '../../mock/youtube-videos-mock.json';
+import { items } from '../../mock_data/youtube-videos-mock.json';
 
 let videoCard;
 
 describe('VideoCard', () => {
   const setCurrentPage = jest.fn();
   const setSelectedVideoIndex = jest.fn();
+  const fetchRelatedVideos = jest.fn();
+  const setSelectedVideo = jest.fn();
 
   beforeEach(() => {
     videoCard = render(
@@ -16,6 +18,8 @@ describe('VideoCard', () => {
         setCurrentPage={setCurrentPage}
         setSelectedVideoIndex={setSelectedVideoIndex}
         videoItem={items[0]}
+        fetchRelatedVideos={fetchRelatedVideos}
+        setSelectedVideo={setSelectedVideo}
       />
     );
   });

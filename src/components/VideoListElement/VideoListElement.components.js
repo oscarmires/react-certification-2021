@@ -9,9 +9,13 @@ export const Container = styled.div`
   transition: background-color 0.2s;
   overflow: hidden;
 
-  @media only screen and (max-width: 950px) {
-    height: 80px;
+  @media only screen and (max-width: 950px) and (min-width: 600px) {
+    height: 70px;
     padding: 5px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    height: 90px;
   }
 
   &:hover {
@@ -31,6 +35,7 @@ export const Thumbnail = styled.div`
 
   @media only screen and (max-width: 950px) and (min-width: 600px) {
     min-width: 80px;
+    max-height: 70%;
   }
 `;
 
@@ -43,7 +48,8 @@ export const ThumbnailImg = styled.img`
 export const InfoArea = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50px;
+  width: 100%;
+  margin: 0 15px;
 `;
 
 export const Title = styled.span`

@@ -7,7 +7,7 @@ export const Bar = styled.div`
   display: flex;
   align-items: center;
   padding: 8px;
-  margin: 0 10px;
+  margin: 0 10px 0 5px;
   transition: background-color 0.2s;
 
   &:hover {

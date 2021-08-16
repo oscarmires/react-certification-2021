@@ -1,22 +1,31 @@
 import React from 'react';
-import { InfoArea } from '../VideoCard/VideoCard.components';
+
 import {
   Container,
   Description,
   Thumbnail,
   ThumbnailImg,
   Title,
+  InfoArea,
 } from './VideoListElement.components';
 
-const VideoListElement = ({ videoItem, index, changePage }) => {
+const VideoListElement = ({
+  videoItem,
+  setCurrentPage,
+  fetchRelatedVideos,
+  setSelectedVideo,
+}) => {
   const handleClick = (e) => {
+    fetchRelatedVideos(videoItem.id.videoId);
     window.scroll(0, 0);
-    changePage('VideoDetails', index);
+    setCurrentPage('VideoDetails');
     window.player.loadVideoById(videoItem.id.videoId);
+    document.getElementById('related-videos-list').scroll(0, 0);
+    setSelectedVideo(videoItem);
   };
 
   return (
-    <Container onClick={handleClick}>
+    <Container onClick={handleClick} data-testid="element-container">
       <Thumbnail>
         <ThumbnailImg
           src={videoItem.snippet.thumbnails.default.url}

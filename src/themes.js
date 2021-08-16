@@ -50,7 +50,7 @@ export const lightTheme = {
 
   /* button */
   btnBurgerFill: '#fff',
-  btnOnHover: 'gray',
+  btnOnHover: '#666',
 
   /* VideoListItems */
   itemOnHover: '#ddd',

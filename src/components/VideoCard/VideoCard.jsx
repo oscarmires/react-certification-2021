@@ -2,10 +2,19 @@ import React from 'react';
 
 import { Card, InfoArea, Thumbnail, ThumbnailImg } from './VideoCard.components';
 
-const VideoCard = ({ videoItem, index, setCurrentPage, setSelectedVideoIndex }) => {
+const VideoCard = ({
+  videoItem,
+  index,
+  setCurrentPage,
+  setSelectedVideoIndex,
+  fetchRelatedVideos,
+  setSelectedVideo,
+}) => {
   const handleClick = (e) => {
     setCurrentPage('VideoDetails');
     setSelectedVideoIndex(index);
+    fetchRelatedVideos(videoItem.id.videoId);
+    setSelectedVideo(videoItem);
   };
 
   return (

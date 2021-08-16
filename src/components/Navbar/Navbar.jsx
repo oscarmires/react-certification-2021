@@ -1,7 +1,11 @@
 import { FormGroup, FormControlLabel, Hidden } from '@material-ui/core';
 import React from 'react';
-import { SearchBar, ThemeSwitch } from '../index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
+
+import { SearchBar, ThemeSwitch } from '..';
 import {
+  Header,
   Nav,
   BurgerMenuButton,
   Left,
@@ -17,10 +21,16 @@ const Navbar = ({
   updateSearchKeyword,
 }) => {
   return (
-    <header style={{ position: 'fixed', width: '100%', zIndex: 1 }} data-testid="header">
+    <Header data-testid="header">
       <Nav>
         <Left>
-          <BurgerMenuButton />
+          <BurgerMenuButton
+            onClick={() => {
+              setCurrentPage('Home');
+            }}
+          >
+            <FontAwesomeIcon icon={faBars} size="2x" color="white" />
+          </BurgerMenuButton>
           <SearchBar
             data-testid="search-bar"
             updateVideos={updateVideos}
@@ -44,11 +54,11 @@ const Navbar = ({
             </FormGroup>
           </Hidden>
           <UserProfileButton>
-            <i className="fas fa-user fa-2x" style={{ color: '#333' }}></i>
+            <FontAwesomeIcon icon={faUser} size="2x" color="#333" />
           </UserProfileButton>
         </Right>
       </Nav>
-    </header>
+    </Header>
   );
 };
 

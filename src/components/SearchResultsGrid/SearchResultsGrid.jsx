@@ -7,6 +7,8 @@ const SearchResultsGrid = ({
   searchKeyword,
   setCurrentPage,
   setSelectedVideoIndex,
+  fetchRelatedVideos,
+  setSelectedVideo,
 }) => {
   const content = () => {
     if (resultItems.length > 0) {
@@ -17,6 +19,8 @@ const SearchResultsGrid = ({
           index={index}
           setCurrentPage={setCurrentPage}
           setSelectedVideoIndex={setSelectedVideoIndex}
+          fetchRelatedVideos={fetchRelatedVideos}
+          setSelectedVideo={setSelectedVideo}
         />
       ));
     } else {

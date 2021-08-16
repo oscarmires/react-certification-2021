@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import Burger from './burger';
+
+export const Header = styled.header`
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+`;
 
 export const Nav = styled.nav`
   width: 100%;
@@ -25,7 +30,7 @@ export const Right = styled.div`
   display: flex;
 `;
 
-export const BurgerMenuButton = styled(Burger)`
+export const BurgerMenuButton = styled.button`
   display: flex;
   height: 40px;
   width: 40px;
@@ -48,7 +53,7 @@ export const UserProfileButton = styled.button`
   height: 40px;
   border-radius: 8px;
   border: none;
-  background-color: white;
+  background-color: darkgray;
 
   &:hover {
     cursor: pointer;

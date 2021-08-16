@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { HomePage } from '../';
-import { items } from '../../mock/youtube-videos-mock.json';
+import { items } from '../../mock_data/youtube-videos-mock.json';
 
 describe('VideoListElement', () => {
   beforeEach(() => {

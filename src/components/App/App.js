@@ -4,8 +4,8 @@ import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, lightTheme, darkTheme } from '../../themes';
 import { HomePage, VideoDetailsPage } from '../../pages';
-import { gapiLoadClient } from '../../util/YouTube';
-import { items } from '../../mock/youtube-videos-mock.json';
+import YouTube from '../../util/YouTube';
+import { items } from '../../mock_data/youtube-videos-mock.json';
 import { Navbar } from '../../components';
 
 function App() {
@@ -13,15 +13,15 @@ function App() {
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('Wizeline');
   const [YouTubeData, setYouTubeData] = useState(items);
+  const [relatedVideos, setRelatedVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const [currentPage, setCurrentPage] = useState('');
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
 
   useEffect(() => {
     // set Google API
-    gapiLoadClient();
-  }, []);
+    YouTube.gapiLoadClient();
 
-  useEffect(() => {
     // retrieve theme from storage
     const isDark = localStorage.getItem('darkThemeEnabled');
     if (isDark) {
@@ -33,11 +33,7 @@ function App() {
 
   useEffect(() => {
     // toggle theme
-    if (darkThemeEnabled) {
-      setTheme(darkTheme);
-    } else {
-      setTheme(lightTheme);
-    }
+    darkThemeEnabled ? setTheme(darkTheme) : setTheme(lightTheme);
   }, [darkThemeEnabled]);
 
   const toggleTheme = () => {
@@ -48,9 +44,10 @@ function App() {
 
   const updateVideos = (searchResults) => setYouTubeData(searchResults);
 
-  const changePage = (page, index) => {
-    setCurrentPage(page);
-    setSelectedVideoIndex(index);
+  const fetchRelatedVideos = async (videoId) => {
+    const relatedVideos = await YouTube.getRelatedVideos(videoId);
+    setRelatedVideos(relatedVideos);
+    console.log('FETCH');
   };
 
   const renderCurrentPage = () => {
@@ -60,8 +57,11 @@ function App() {
           <VideoDetailsPage
             YouTubeData={YouTubeData}
             selectedVideoIndex={selectedVideoIndex}
-            changePage={changePage}
-            searchKeyword={searchKeyword}
+            setCurrentPage={setCurrentPage}
+            relatedVideos={relatedVideos}
+            fetchRelatedVideos={fetchRelatedVideos}
+            selectedVideo={selectedVideo}
+            setSelectedVideo={setSelectedVideo}
           />
         );
       default:
@@ -71,6 +71,9 @@ function App() {
             YouTubeData={YouTubeData}
             setCurrentPage={setCurrentPage}
             setSelectedVideoIndex={setSelectedVideoIndex}
+            setRelatedVideos={setRelatedVideos}
+            fetchRelatedVideos={fetchRelatedVideos}
+            setSelectedVideo={setSelectedVideo}
           />
         );
     }
@@ -81,7 +84,6 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyles />
         <Navbar
-          data-testid="navbar"
           darkThemeEnabled={darkThemeEnabled}
           toggleTheme={toggleTheme}
           updateVideos={updateVideos}
