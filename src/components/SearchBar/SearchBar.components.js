@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 export const Bar = styled.div`
-  background-color: #333;
+  background-color: ${(props) => props.theme.searchBarBackgroundColor};
   border-radius: 8px;
   height: 40px;
   display: flex;
   align-items: center;
   padding: 8px;
-  margin: 0 10px;
+  margin: 0 10px 0 5px;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #444;
+    background-color: ${(props) => props.theme.searchBarOnHOver};
   }
 
   @media only screen and (max-width: 600px) {

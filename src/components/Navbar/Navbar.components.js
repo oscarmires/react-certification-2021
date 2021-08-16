@@ -1,11 +1,16 @@
 import styled from 'styled-components';
-import Burger from './burger';
+
+export const Header = styled.header`
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+`;
 
 export const Nav = styled.nav`
   width: 100%;
   height: 60px;
-  background-color: #555;
-  box-shadow: 0 1px 5px grey;
+  background-color: ${(props) => props.theme.headerBackgroundColor};
+  box-shadow: 0 3px 5px ${(props) => props.theme.shadowColor};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,7 +30,7 @@ export const Right = styled.div`
   display: flex;
 `;
 
-export const BurgerMenuButton = styled(Burger)`
+export const BurgerMenuButton = styled.button`
   display: flex;
   height: 40px;
   width: 40px;
@@ -34,11 +39,11 @@ export const BurgerMenuButton = styled(Burger)`
   justify-content: center;
   border-radius: 8px;
   border: none;
-  background-color: #555;
+  background-color: transparent;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: gray;
+    background-color: ${(props) => props.theme.btnOnHover};
     cursor: pointer;
   }
 `;
@@ -48,7 +53,7 @@ export const UserProfileButton = styled.button`
   height: 40px;
   border-radius: 8px;
   border: none;
-  background-color: white;
+  background-color: darkgray;
 
   &:hover {
     cursor: pointer;

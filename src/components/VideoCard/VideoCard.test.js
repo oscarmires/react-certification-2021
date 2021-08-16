@@ -1,12 +1,27 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { VideoCard } from '../';
 
-import { items } from '../../mock/youtube-videos-mock.json';
+import { items } from '../../mock_data/youtube-videos-mock.json';
+
+let videoCard;
 
 describe('VideoCard', () => {
+  const setCurrentPage = jest.fn();
+  const setSelectedVideoIndex = jest.fn();
+  const fetchRelatedVideos = jest.fn();
+  const setSelectedVideo = jest.fn();
+
   beforeEach(() => {
-    render(<VideoCard videoItem={items[0]} />);
+    videoCard = render(
+      <VideoCard
+        setCurrentPage={setCurrentPage}
+        setSelectedVideoIndex={setSelectedVideoIndex}
+        videoItem={items[0]}
+        fetchRelatedVideos={fetchRelatedVideos}
+        setSelectedVideo={setSelectedVideo}
+      />
+    );
   });
 
   it('renders a card title', () => {
@@ -22,5 +37,11 @@ describe('VideoCard', () => {
   it('displays a thumbnail in a card', () => {
     const thumbnail = screen.queryByText(items[0].snippet.title);
     expect(thumbnail).toBeInTheDocument();
+  });
+
+  it('leads to VideoDetails page on click', () => {
+    const container = screen.getByTestId('card-div');
+    fireEvent.click(container);
+    expect(setCurrentPage.mock.calls.length).toBe(1);
   });
 });

@@ -1,10 +1,25 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
+
 import SearchBar from './SearchBar';
+import YouTube from '../../util/YouTube';
+
+jest.mock('../../util/YouTube');
 
 describe('SearchBar', () => {
+  const updateVideos = jest.fn();
+  const setCurrentPage = jest.fn();
+  const updateSearchKeyword = jest.fn();
+
   beforeEach(() => {
-    render(<SearchBar />);
+    render(
+      <SearchBar
+        updateVideos={updateVideos}
+        setCurrentPage={setCurrentPage}
+        updateSearchKeyword={updateSearchKeyword}
+      />
+    );
   });
 
   it('renders an input element', () => {
@@ -12,12 +27,28 @@ describe('SearchBar', () => {
     expect(inputElement).toBeInTheDocument();
   });
 
-  it('changes text when typed into', () => {
+  it('erases typed text on key down', () => {
+    // YouTube.executeSearch = jest.fn().mockResolvedValue(items);
     const typedText = 'abcde';
 
-    const inputElement = screen.getByPlaceholderText(/search/i);
-    fireEvent.change(inputElement, { target: { value: typedText } });
+    const inputElement = screen.getByTestId('search-input');
+    act(() => {
+      fireEvent.change(inputElement, { target: { value: typedText } });
+      fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter', keyCode: 13 });
+    });
 
-    expect(inputElement.value).toBe(typedText);
+    expect(inputElement.value).toMatch('');
+  });
+
+  it('calls API executeSearch on enter', () => {
+    const typedText = 'abcde';
+    const executeSearchSpy = jest.spyOn(YouTube, 'executeSearch');
+
+    const inputElement = screen.getByTestId('search-input');
+    act(() => {
+      fireEvent.change(inputElement, { target: { value: typedText } });
+      fireEvent.keyDown(inputElement, { key: 'Enter', code: 'Enter', keyCode: 13 });
+    });
+    expect(executeSearchSpy).toBeCalled();
   });
 });

@@ -1,9 +1,16 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { App } from '../';
+import { render, screen } from '@testing-library/react';
+
+import App from './App';
 
 describe('App', () => {
-  it('renders', () => {
+  global.window.gapi = { load: jest.fn() };
+
+  beforeEach(() => {
     render(<App />);
+  });
+
+  it('sets GAPI after mounting', () => {
+    expect(global.window.gapi.load).toBeCalled();
   });
 });

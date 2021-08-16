@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  width: 300px;
+  width: 320px;
   height: 400px;
-  background-color: white;
+  background-color: ${(props) => props.theme.boxBackgroundColor};
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 1px 1px 5px #ccc;
+  box-shadow: 1px 1px 5px ${(props) => props.theme.shadowColor};
   margin: 10px;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #eee;
+    background-color: ${(props) => props.theme.boxOnHover};
     cursor: pointer;
   }
 `;
@@ -19,6 +19,10 @@ export const Card = styled.div`
 export const InfoArea = styled.div`
   padding: 15px;
   width: 100%;
+
+  & h2 {
+    margin: 5px 0;
+  }
 `;
 
 export const Thumbnail = styled.div`
