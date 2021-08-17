@@ -24,14 +24,6 @@ function App() {
     // set Google API
     YouTube.gapiLoadClient();
 
-    // retrieve theme from storage
-    const isDark = localStorage.getItem('darkThemeEnabled');
-    if (isDark) {
-      // setDarkThemeEnabled(isDark === 'true');
-    } else {
-      // localStorage.setItem('darkThemeEnabled', false);
-    }
-
     // load stored theme setting
     dispatchThemeState({ type: 'load' });
     // eslint-disable-next-line
