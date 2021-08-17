@@ -1,26 +1,20 @@
 import React from 'react';
+
 import { CardsGrid, BackgroundText } from './SearchResultsGrid.components';
 import { VideoCard } from '..';
+import { useSearchKeyword } from '../../global-context';
 
-const SearchResultsGrid = ({
-  resultItems,
-  searchKeyword,
-  setCurrentPage,
-  setSelectedVideoIndex,
-  fetchRelatedVideos,
-  setSelectedVideo,
-}) => {
+const SearchResultsGrid = ({ resultItems, setCurrentPage, fetchRelatedVideos }) => {
+  const { searchKeyword } = useSearchKeyword();
+
   const content = () => {
     if (resultItems.length > 0) {
-      return resultItems.map((video, index) => (
+      return resultItems.map((video) => (
         <VideoCard
           key={video.etag}
           videoItem={video}
-          index={index}
           setCurrentPage={setCurrentPage}
-          setSelectedVideoIndex={setSelectedVideoIndex}
           fetchRelatedVideos={fetchRelatedVideos}
-          setSelectedVideo={setSelectedVideo}
         />
       ));
     } else {

@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+
 import { SearchInput, Bar } from './SearchBar.components';
 import YouTube from '../../util/YouTube';
+import { useSearchKeyword } from '../../global-context';
+import { useState } from 'react';
 
-const SearchBar = ({ updateVideos, setCurrentPage, updateSearchKeyword }) => {
+const SearchBar = ({ updateVideos, setCurrentPage }) => {
+  const { setSearchKeyword } = useSearchKeyword();
   const [inputValue, setInputValue] = useState('');
 
   const handleEnter = async (e) => {
     if (e.keyCode === 13) {
       const searchResults = await YouTube.executeSearch(e.target.value);
       setCurrentPage('Home');
-      updateSearchKeyword(inputValue);
-      updateVideos(searchResults);
+      setSearchKeyword(inputValue);
       setInputValue('');
+      updateVideos(searchResults);
       document.getElementById('search-input').blur();
     }
   };

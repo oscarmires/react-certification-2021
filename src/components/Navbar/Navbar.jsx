@@ -13,13 +13,7 @@ import {
   UserProfileButton,
 } from './Navbar.components';
 
-const Navbar = ({
-  darkThemeEnabled,
-  toggleTheme,
-  updateVideos,
-  setCurrentPage,
-  updateSearchKeyword,
-}) => {
+const Navbar = ({ darkThemeEnabled, toggleTheme, updateVideos, setCurrentPage }) => {
   return (
     <Header data-testid="header">
       <Nav>
@@ -35,19 +29,13 @@ const Navbar = ({
             data-testid="search-bar"
             updateVideos={updateVideos}
             setCurrentPage={setCurrentPage}
-            updateSearchKeyword={updateSearchKeyword}
           />
         </Left>
         <Right>
           <Hidden xsDown>
             <FormGroup>
               <FormControlLabel
-                control={
-                  <ThemeSwitch
-                    toggleTheme={toggleTheme}
-                    darkThemeEnabled={darkThemeEnabled}
-                  />
-                }
+                control={<ThemeSwitch />}
                 label="Dark mode"
                 style={{ color: 'white' }}
               />

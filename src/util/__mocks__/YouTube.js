@@ -8,7 +8,7 @@ const YouTube = {
 
   getRelatedVideos: jest.fn().mockResolvedValue(relatedVideos),
 
-  useYouTubePlayer: jest.fn((videoId) => {
+  useYouTubePlayer: jest.fn(() => {
     console.log('test iframe loaded');
   }),
 };

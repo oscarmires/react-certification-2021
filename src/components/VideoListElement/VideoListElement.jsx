@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useSelectedVideo } from '../../global-context';
+
 import {
   Container,
   Description,
@@ -9,19 +11,16 @@ import {
   InfoArea,
 } from './VideoListElement.components';
 
-const VideoListElement = ({
-  videoItem,
-  setCurrentPage,
-  fetchRelatedVideos,
-  setSelectedVideo,
-}) => {
+const VideoListElement = ({ videoItem, setCurrentPage, fetchRelatedVideos }) => {
+  const { setSelectedVideo } = useSelectedVideo();
+
   const handleClick = (e) => {
+    setSelectedVideo(videoItem);
     fetchRelatedVideos(videoItem.id.videoId);
-    window.scroll(0, 0);
     setCurrentPage('VideoDetails');
     window.player.loadVideoById(videoItem.id.videoId);
     document.getElementById('related-videos-list').scroll(0, 0);
-    setSelectedVideo(videoItem);
+    window.scroll(0, 0);
   };
 
   return (

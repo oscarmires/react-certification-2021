@@ -1,20 +1,15 @@
 import React from 'react';
 
 import { Card, InfoArea, Thumbnail, ThumbnailImg } from './VideoCard.components';
+import { useSelectedVideo } from '../../global-context';
 
-const VideoCard = ({
-  videoItem,
-  index,
-  setCurrentPage,
-  setSelectedVideoIndex,
-  fetchRelatedVideos,
-  setSelectedVideo,
-}) => {
+const VideoCard = ({ videoItem, setCurrentPage, fetchRelatedVideos }) => {
+  const { setSelectedVideo } = useSelectedVideo();
+
   const handleClick = (e) => {
-    setCurrentPage('VideoDetails');
-    setSelectedVideoIndex(index);
-    fetchRelatedVideos(videoItem.id.videoId);
     setSelectedVideo(videoItem);
+    fetchRelatedVideos(videoItem.id.videoId);
+    setCurrentPage('VideoDetails');
   };
 
   return (

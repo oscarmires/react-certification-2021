@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { VideoCard } from '../';
 
+import { VideoCard } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
+import { SelectedVideoProvider } from '../../global-context';
 
 let videoCard;
 
@@ -14,13 +15,15 @@ describe('VideoCard', () => {
 
   beforeEach(() => {
     videoCard = render(
-      <VideoCard
-        setCurrentPage={setCurrentPage}
-        setSelectedVideoIndex={setSelectedVideoIndex}
-        videoItem={items[0]}
-        fetchRelatedVideos={fetchRelatedVideos}
-        setSelectedVideo={setSelectedVideo}
-      />
+      <SelectedVideoProvider>
+        <VideoCard
+          setCurrentPage={setCurrentPage}
+          setSelectedVideoIndex={setSelectedVideoIndex}
+          videoItem={items[0]}
+          fetchRelatedVideos={fetchRelatedVideos}
+          setSelectedVideo={setSelectedVideo}
+        />
+      </SelectedVideoProvider>
     );
   });
 
