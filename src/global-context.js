@@ -68,14 +68,14 @@ function themeStateReducer(state, action) {
       localStorage.setItem('darkThemeEnabled', !state.isDark);
       const nextIsDark = !state.isDark;
       return {
-        ...state,
         theme: nextIsDark ? darkTheme : lightTheme,
-        isDark: !state.isDark,
+        isDark: nextIsDark,
       };
     case 'load':
       let isDark = localStorage.getItem('darkThemeEnabled');
       if (!isDark) {
         localStorage.setItem('darkThemeEnabled', false);
+        isDark = 'false';
       }
       isDark = isDark === 'true';
       return { ...state, theme: isDark ? darkTheme : lightTheme, isDark: isDark };
