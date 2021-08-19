@@ -1,10 +1,17 @@
 import React from 'react';
 import Switch from '@material-ui/core/Switch';
 
-export default function MaterialuiSwitch({ toggleTheme, darkThemeEnabled }) {
-  async function handleSwitchChange(e) {
-    await toggleTheme();
-  }
+import { useThemeState } from '../../global-context';
 
-  return <Switch checked={darkThemeEnabled} onChange={handleSwitchChange} />;
+export default function MaterialuiSwitch() {
+  const { themeState, dispatchThemeState } = useThemeState();
+
+  return (
+    <Switch
+      checked={themeState.isDark}
+      onChange={() => {
+        dispatchThemeState({ type: 'toggle' });
+      }}
+    />
+  );
 }

@@ -4,6 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import SearchBar from './SearchBar';
 import YouTube from '../../util/YouTube';
+import { SearchKeywordProvider } from '../../global-context';
 
 jest.mock('../../util/YouTube');
 
@@ -14,11 +15,13 @@ describe('SearchBar', () => {
 
   beforeEach(() => {
     render(
-      <SearchBar
-        updateVideos={updateVideos}
-        setCurrentPage={setCurrentPage}
-        updateSearchKeyword={updateSearchKeyword}
-      />
+      <SearchKeywordProvider>
+        <SearchBar
+          updateVideos={updateVideos}
+          setCurrentPage={setCurrentPage}
+          updateSearchKeyword={updateSearchKeyword}
+        />
+      </SearchKeywordProvider>
     );
   });
 

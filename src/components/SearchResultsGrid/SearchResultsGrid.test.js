@@ -1,15 +1,25 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+
 import { SearchResultsGrid } from '../index';
 import { items } from '../../mock_data/youtube-videos-mock.json';
+import { SearchKeywordProvider, SelectedVideoProvider } from '../../global-context';
 
 describe('Navbar', () => {
+  const searchResults = items;
+  const setCurrentPage = jest.fn();
+  const fetchRelatedVideos = jest.fn();
   it("renders cards from API's data", () => {
-    const searchResults = items;
-    const searchKeyword = 'wizeline';
-
     render(
-      <SearchResultsGrid resultItems={searchResults} searchKeyword={searchKeyword} />
+      <SearchKeywordProvider>
+        <SelectedVideoProvider>
+          <SearchResultsGrid
+            resultItems={searchResults}
+            setCurrentPage={setCurrentPage}
+            fetchRelatedVideos={fetchRelatedVideos}
+          />
+        </SelectedVideoProvider>
+      </SearchKeywordProvider>
     );
 
     const sampleCard = screen.getByText(items[0].snippet.title);
@@ -18,11 +28,19 @@ describe('Navbar', () => {
 
   it('displays background message when no results where found', () => {
     const searchResults = [];
-    const searchKeyword = 'uncommon word';
 
     render(
-      <SearchResultsGrid resultItems={searchResults} searchKeyword={searchKeyword} />
+      <SearchKeywordProvider>
+        <SelectedVideoProvider>
+          <SearchResultsGrid
+            resultItems={searchResults}
+            setCurrentPage={setCurrentPage}
+            fetchRelatedVideos={fetchRelatedVideos}
+          />
+        </SelectedVideoProvider>
+      </SearchKeywordProvider>
     );
+
     const backgroundMessage = screen.getByTestId('background-test');
 
     expect(backgroundMessage).toBeInTheDocument();

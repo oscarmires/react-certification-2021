@@ -1,14 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+
 import { Navbar } from '../index';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from '../../themes';
+import { SearchKeywordProvider } from '../../global-context';
 
 describe('Navbar', () => {
   beforeEach(() => {
     render(
       <ThemeProvider theme={lightTheme}>
-        <Navbar />
+        <SearchKeywordProvider>
+          <Navbar />
+        </SearchKeywordProvider>
       </ThemeProvider>
     );
   });

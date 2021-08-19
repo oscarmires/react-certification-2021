@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { VideoListElement } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
+import { SelectedVideoProvider } from '../../global-context';
 
 import YouTube from '../../util/YouTube';
 
@@ -17,12 +18,14 @@ describe('VideoListElement', () => {
     container.scroll = jest.fn();
     document.body.appendChild(container);
     render(
-      <VideoListElement
-        videoItem={items[0]}
-        setCurrentPage={setCurrentPage}
-        fetchRelatedVideos={fetchRelatedVideos}
-        setSelectedVideo={setSelectedVideo}
-      />,
+      <SelectedVideoProvider>
+        <VideoListElement
+          videoItem={items[0]}
+          setCurrentPage={setCurrentPage}
+          fetchRelatedVideos={fetchRelatedVideos}
+          setSelectedVideo={setSelectedVideo}
+        />
+      </SelectedVideoProvider>,
       document.getElementById('related-videos-list')
     );
   });

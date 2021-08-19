@@ -11,14 +11,11 @@ import {
 
 import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
+import { useSelectedVideo } from '../../global-context';
 
-const VideoDetailsPage = ({
-  setCurrentPage,
-  relatedVideos,
-  fetchRelatedVideos,
-  selectedVideo,
-  setSelectedVideo,
-}) => {
+const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos }) => {
+  const { selectedVideo } = useSelectedVideo();
+
   YouTube.useYouTubePlayer(selectedVideo.id.videoId);
 
   // discard videos that don't have 'snippet' attribute
@@ -30,7 +27,6 @@ const VideoDetailsPage = ({
       videoItem={video}
       setCurrentPage={setCurrentPage}
       fetchRelatedVideos={fetchRelatedVideos}
-      setSelectedVideo={setSelectedVideo}
     />
   ));
 
