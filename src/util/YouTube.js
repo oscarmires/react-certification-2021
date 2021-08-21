@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const YouTube = {
-  gapiLoadClient() {
+  gapiLoadClient: function () {
     const loadClient = () => {
       window.gapi.client.setApiKey(process.env.REACT_APP_YOUTUBE_API_KEY);
       return window.gapi.client
@@ -48,6 +48,54 @@ const YouTube = {
       console.log(error);
     }
     return [];
+  },
+
+  gapiLoadClientAndVideo: async function (videoId) {
+    let video = {};
+    const getVideoById = async function (videoId) {
+      const response = await window.gapi.client.youtube.videos.list({
+        part: 'snippet',
+        id: videoId,
+        maxResults: 1,
+      });
+      console.log('got video response by id');
+
+      video = response.result.items[1];
+    };
+
+    const loadClient = () => {
+      window.gapi.client.setApiKey(process.env.REACT_APP_YOUTUBE_API_KEY);
+      return window.gapi.client
+        .load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
+        .then(
+          function () {
+            console.log('GAPI client loaded for API');
+          },
+          function (err) {
+            console.error('Error loading GAPI client for API', err);
+          }
+        )
+        .then(getVideoById(videoId));
+    };
+
+    await window.gapi.load('client', loadClient);
+    return video;
+  },
+
+  getByVideoId: async function (videoId) {
+    try {
+      const response = await window.gapi.client.youtube.videos.list({
+        part: 'snippet',
+        id: videoId,
+        maxResults: 1,
+      });
+      console.log('got video response by id');
+
+      return response.result.items[1];
+    } catch (error) {
+      console.log(error);
+    }
+    return {};
   },
 
   useYouTubePlayer(videoId) {

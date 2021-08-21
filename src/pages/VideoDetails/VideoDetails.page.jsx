@@ -13,10 +13,15 @@ import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
 import { useSelectedVideo } from '../../global-context';
 
-const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos }) => {
-  const { selectedVideo } = useSelectedVideo();
+const VideoDetailsPage = ({
+  setCurrentPage,
+  relatedVideos,
+  fetchRelatedVideos,
+  match,
+}) => {
+  const { selectedVideo, setSelectedVideo } = useSelectedVideo();
 
-  YouTube.useYouTubePlayer(selectedVideo.id.videoId);
+  YouTube.useYouTubePlayer(match.params.videoId);
 
   // discard videos that don't have 'snippet' attribute
   const filteredRelatedVideos = relatedVideos.filter((video) => video.snippet != null);
@@ -34,6 +39,17 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos })
     window.scroll(0, 0);
   });
 
+  useEffect(() => {
+    console.log(match.params.videoId);
+    async function fetchData() {
+      console.log('in fetch data');
+      const videoObject = await YouTube.gapiLoadClientAndVideo(match.params.videoId);
+      setSelectedVideo(videoObject);
+      console.log(selectedVideo);
+    }
+    fetchData();
+  }, [match]);
+
   return (
     <PageContainer>
       <PlayerAndInfo>
@@ -41,8 +57,8 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos })
           <div id="player" data-testid="video-player"></div>
         </VideoPlayer>
         <VideoInfoArea>
-          <h1>{selectedVideo.snippet.title}</h1>
-          <p>{selectedVideo.snippet.description}</p>
+          <h1>{selectedVideo.snippet && selectedVideo.snippet.title}</h1>
+          <p>{selectedVideo.snippet && selectedVideo.snippet.description}</p>
         </VideoInfoArea>
       </PlayerAndInfo>
       <VideoList id="related-videos-list">

@@ -12,6 +12,7 @@ import {
   SearchKeywordProvider,
   useThemeState,
 } from '../../global-context';
+import { Route, Switch } from 'react-router';
 
 function App() {
   const [YouTubeData, setYouTubeData] = useState(items);
@@ -65,7 +66,47 @@ function App() {
         <GlobalStyles />
         <SearchKeywordProvider>
           <Navbar updateVideos={updateVideos} setCurrentPage={setCurrentPage} />
-          <SelectedVideoProvider>{renderCurrentPage()}</SelectedVideoProvider>
+          <SelectedVideoProvider>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <HomePage
+                    {...props}
+                    YouTubeData={YouTubeData}
+                    setCurrentPage={setCurrentPage}
+                    setRelatedVideos={setRelatedVideos}
+                    fetchRelatedVideos={fetchRelatedVideos}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/video-details"
+                render={(props) => (
+                  <HomePage
+                    {...props}
+                    YouTubeData={YouTubeData}
+                    setCurrentPage={setCurrentPage}
+                    setRelatedVideos={setRelatedVideos}
+                    fetchRelatedVideos={fetchRelatedVideos}
+                  />
+                )}
+              />
+              <Route
+                path="/video-details/:videoId"
+                render={(props) => (
+                  <VideoDetailsPage
+                    {...props}
+                    setCurrentPage={setCurrentPage}
+                    relatedVideos={relatedVideos}
+                    fetchRelatedVideos={fetchRelatedVideos}
+                  />
+                )}
+              />
+            </Switch>
+          </SelectedVideoProvider>
         </SearchKeywordProvider>
       </ThemeProvider>
     </>

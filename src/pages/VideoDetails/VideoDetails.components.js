@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PageContainer = styled.div`
+export const PageContainer = styled.main`
   padding: 60px 0 0;
   width: 100%;
   height: 100vh;

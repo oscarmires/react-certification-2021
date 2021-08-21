@@ -13,7 +13,7 @@ import {
   UserProfileButton,
 } from './Navbar.components';
 
-const Navbar = ({ darkThemeEnabled, toggleTheme, updateVideos, setCurrentPage }) => {
+const Navbar = ({ updateVideos, setCurrentPage }) => {
   return (
     <Header data-testid="header">
       <Nav>
