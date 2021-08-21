@@ -4,12 +4,15 @@ import './index.css';
 
 import { App } from './components';
 import { ThemeStateProvider } from './global-context';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeStateProvider>
-      <App />
-    </ThemeStateProvider>
+    <BrowserRouter>
+      <ThemeStateProvider>
+        <App />
+      </ThemeStateProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

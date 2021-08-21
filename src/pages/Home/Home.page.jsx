@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { SearchResultsGrid } from '../../components';
 import { HomeArea } from './Home.components';
+import YouTube from '../../util/YouTube';
+import { useIsClientLoaded } from '../../global-context';
 
-function HomePage({ searchKeyword, YouTubeData, setCurrentPage, fetchRelatedVideos }) {
+function HomePage({ YouTubeData, setCurrentPage, fetchRelatedVideos }) {
+  const { setIsClientLoaded } = useIsClientLoaded();
+
+  useEffect(() => {
+    // set Google API
+    YouTube.gapiLoadClient(setIsClientLoaded);
+
+    return () => {
+      setIsClientLoaded(false);
+    };
+  }, []);
+
   return (
     <>
       <HomeArea>

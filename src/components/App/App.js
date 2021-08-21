@@ -11,7 +11,9 @@ import {
   SelectedVideoProvider,
   SearchKeywordProvider,
   useThemeState,
+  IsClientLoadedProvider,
 } from '../../global-context';
+import { Switch, Route } from 'react-router';
 
 function App() {
   const [YouTubeData, setYouTubeData] = useState(items);
@@ -21,9 +23,6 @@ function App() {
   const { themeState, dispatchThemeState } = useThemeState();
 
   useEffect(() => {
-    // set Google API
-    YouTube.gapiLoadClient();
-
     // load stored theme setting
     dispatchThemeState({ type: 'load' });
     // eslint-disable-next-line
@@ -60,15 +59,45 @@ function App() {
   };
 
   return (
-    <>
+    <IsClientLoadedProvider>
       <ThemeProvider theme={themeState.theme}>
         <GlobalStyles />
         <SearchKeywordProvider>
           <Navbar updateVideos={updateVideos} setCurrentPage={setCurrentPage} />
-          <SelectedVideoProvider>{renderCurrentPage()}</SelectedVideoProvider>
+          <SelectedVideoProvider>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <HomePage
+                    {...props}
+                    YouTubeData={YouTubeData}
+                    setCurrentPage={setCurrentPage}
+                    setRelatedVideos={setRelatedVideos}
+                    fetchRelatedVideos={fetchRelatedVideos}
+                  />
+                )}
+              />
+              <Switch>
+                <Route
+                  exact
+                  path="/video/:videoId"
+                  render={(props) => (
+                    <VideoDetailsPage
+                      {...props}
+                      setCurrentPage={setCurrentPage}
+                      relatedVideos={relatedVideos}
+                      fetchRelatedVideos={fetchRelatedVideos}
+                    />
+                  )}
+                />
+              </Switch>
+            </Switch>
+          </SelectedVideoProvider>
         </SearchKeywordProvider>
       </ThemeProvider>
-    </>
+    </IsClientLoadedProvider>
   );
 }
 

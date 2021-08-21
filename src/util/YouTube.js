@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const YouTube = {
-  gapiLoadClient() {
+  gapiLoadClient(setIsClientLoaded) {
     const loadClient = () => {
       window.gapi.client.setApiKey(process.env.REACT_APP_YOUTUBE_API_KEY);
       return window.gapi.client
@@ -9,6 +9,7 @@ const YouTube = {
         .then(
           function () {
             console.log('GAPI client loaded for API');
+            setIsClientLoaded(true);
           },
           function (err) {
             console.error('Error loading GAPI client for API', err);

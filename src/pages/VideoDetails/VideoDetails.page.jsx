@@ -11,12 +11,19 @@ import {
 
 import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
-import { useSelectedVideo } from '../../global-context';
+import { useIsClientLoaded, useSelectedVideo } from '../../global-context';
 
-const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos }) => {
+const VideoDetailsPage = ({
+  setCurrentPage,
+  relatedVideos,
+  fetchRelatedVideos,
+  match,
+}) => {
   const { selectedVideo } = useSelectedVideo();
+  const { isClientLoaded, setIsClientLoaded } = useIsClientLoaded();
 
-  YouTube.useYouTubePlayer(selectedVideo.id.videoId);
+  const videoId = match.params.videoId;
+  YouTube.useYouTubePlayer(videoId);
 
   // discard videos that don't have 'snippet' attribute
   const filteredRelatedVideos = relatedVideos.filter((video) => video.snippet != null);
@@ -34,6 +41,21 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos })
     window.scroll(0, 0);
   });
 
+  useEffect(() => {
+    // set Google API
+    YouTube.gapiLoadClient(setIsClientLoaded);
+
+    return () => {
+      setIsClientLoaded(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isClientLoaded) {
+      console.log(isClientLoaded);
+    }
+  }, [isClientLoaded]);
+
   return (
     <PageContainer>
       <PlayerAndInfo>
@@ -41,13 +63,13 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, fetchRelatedVideos })
           <div id="player" data-testid="video-player"></div>
         </VideoPlayer>
         <VideoInfoArea>
-          <h1>{selectedVideo.snippet.title}</h1>
-          <p>{selectedVideo.snippet.description}</p>
+          <h1>{selectedVideo.snippet && selectedVideo.snippet.title}</h1>
+          <p>{selectedVideo.snippet && selectedVideo.snippet.description}</p>
         </VideoInfoArea>
       </PlayerAndInfo>
       <VideoList id="related-videos-list">
         <h2>Related videos</h2>
-        {videoListElements}
+        {selectedVideo.snippet && videoListElements}
       </VideoList>
     </PageContainer>
   );

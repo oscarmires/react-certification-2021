@@ -10,7 +10,7 @@ import { items } from './mock_data/youtube-videos-mock.json';
 const SelectedVideoContext = React.createContext();
 
 function SelectedVideoProvider({ children }) {
-  const [selectedVideo, setSelectedVideo] = useState(items[0]);
+  const [selectedVideo, setSelectedVideo] = useState({});
 
   const value = { selectedVideo, setSelectedVideo };
   return (
@@ -106,6 +106,34 @@ function useThemeState() {
   return context;
 }
 
+/**
+ * isClientLoaded context
+ */
+
+const IsClientLoadedContext = React.createContext();
+
+function IsClientLoadedProvider({ children }) {
+  const [isClientLoaded, setIsClientLoaded] = useState(false);
+
+  const value = { isClientLoaded, setIsClientLoaded };
+
+  return (
+    <IsClientLoadedContext.Provider value={value}>
+      {children}
+    </IsClientLoadedContext.Provider>
+  );
+}
+
+function useIsClientLoaded() {
+  const context = useContext(IsClientLoadedContext);
+  if (context === undefined) {
+    throw new Error(
+      `useIsClientLoaded must be used within a IsClientLoadedProvider (context is <<${context}>>)`
+    );
+  }
+  return context;
+}
+
 export {
   SelectedVideoProvider,
   useSelectedVideo,
@@ -113,4 +141,6 @@ export {
   useSearchKeyword,
   ThemeStateProvider,
   useThemeState,
+  IsClientLoadedProvider,
+  useIsClientLoaded,
 };
