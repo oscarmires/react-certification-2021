@@ -13,13 +13,8 @@ import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
 import { useIsClientLoaded, useSelectedVideo } from '../../global-context';
 
-const VideoDetailsPage = ({
-  setCurrentPage,
-  relatedVideos,
-  fetchRelatedVideos,
-  match,
-}) => {
-  const { selectedVideo } = useSelectedVideo();
+const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, match }) => {
+  const { selectedVideo, setSelectedVideo } = useSelectedVideo();
   const { isClientLoaded, setIsClientLoaded } = useIsClientLoaded();
 
   const videoId = match.params.videoId;
@@ -33,7 +28,6 @@ const VideoDetailsPage = ({
       key={video.etag}
       videoItem={video}
       setCurrentPage={setCurrentPage}
-      fetchRelatedVideos={fetchRelatedVideos}
     />
   ));
 
@@ -51,8 +45,25 @@ const VideoDetailsPage = ({
   }, []);
 
   useEffect(() => {
+    // after GAPI client is loaded
+    async function fetchSelectedVideoData(videoId) {
+      try {
+        const res = await YouTube.getByVideoId(videoId);
+        setSelectedVideo(res);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    async function fetchRelatedVideos(videoId) {
+      const relatedVideos = await YouTube.getRelatedVideos(videoId);
+      setRelatedVideos(relatedVideos);
+    }
+
     if (isClientLoaded) {
       console.log(isClientLoaded);
+      fetchSelectedVideoData(videoId);
+      fetchRelatedVideos(videoId);
     }
   }, [isClientLoaded]);
 

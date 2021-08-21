@@ -36,28 +36,6 @@ function App() {
     console.log('FETCH');
   };
 
-  const renderCurrentPage = () => {
-    switch (currentPage) {
-      case 'VideoDetails':
-        return (
-          <VideoDetailsPage
-            setCurrentPage={setCurrentPage}
-            relatedVideos={relatedVideos}
-            fetchRelatedVideos={fetchRelatedVideos}
-          />
-        );
-      default:
-        return (
-          <HomePage
-            YouTubeData={YouTubeData}
-            setCurrentPage={setCurrentPage}
-            setRelatedVideos={setRelatedVideos}
-            fetchRelatedVideos={fetchRelatedVideos}
-          />
-        );
-    }
-  };
-
   return (
     <IsClientLoadedProvider>
       <ThemeProvider theme={themeState.theme}>
@@ -88,7 +66,7 @@ function App() {
                       {...props}
                       setCurrentPage={setCurrentPage}
                       relatedVideos={relatedVideos}
-                      fetchRelatedVideos={fetchRelatedVideos}
+                      setRelatedVideos={setRelatedVideos}
                     />
                   )}
                 />

@@ -1,7 +1,6 @@
 import React, { useState, useContext, useReducer } from 'react';
 
 import { lightTheme, darkTheme } from './themes';
-import { items } from './mock_data/youtube-videos-mock.json';
 
 /**
  * Selected video context

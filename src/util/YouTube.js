@@ -51,6 +51,21 @@ const YouTube = {
     return [];
   },
 
+  getByVideoId: async function (videoId) {
+    try {
+      const response = await window.gapi.client.youtube.videos.list({
+        part: 'snippet',
+        id: videoId,
+        maxResults: 1,
+      });
+      if (response.result.items.length == 0) return {};
+      return response.result.items[0];
+    } catch (error) {
+      console.log(error);
+    }
+    return {};
+  },
+
   useYouTubePlayer(videoId) {
     useEffect(() => {
       // a. This code loads the IFrame Player API code asynchronously.
