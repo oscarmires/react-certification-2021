@@ -58,7 +58,7 @@ const YouTube = {
         id: videoId,
         maxResults: 1,
       });
-      if (response.result.items.length == 0) return {};
+      if (response.result.items.length === 0) return {};
       return response.result.items[0];
     } catch (error) {
       console.log(error);

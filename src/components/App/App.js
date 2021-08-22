@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles } from '../../themes';
-import { HomePage, VideoDetailsPage } from '../../pages';
-import YouTube from '../../util/YouTube';
+import { HomePage, NotFound, VideoDetailsPage } from '../../pages';
 import { items } from '../../mock_data/youtube-videos-mock.json';
 import { Navbar } from '../../components';
 import {
@@ -18,7 +17,6 @@ import { Switch, Route } from 'react-router';
 function App() {
   const [YouTubeData, setYouTubeData] = useState(items);
   const [relatedVideos, setRelatedVideos] = useState([]);
-  const [currentPage, setCurrentPage] = useState('');
 
   const { themeState, dispatchThemeState } = useThemeState();
 
@@ -30,47 +28,36 @@ function App() {
 
   const updateVideos = (searchResults) => setYouTubeData(searchResults);
 
-  const fetchRelatedVideos = async (videoId) => {
-    const relatedVideos = await YouTube.getRelatedVideos(videoId);
-    setRelatedVideos(relatedVideos);
-    console.log('FETCH');
-  };
-
   return (
     <IsClientLoadedProvider>
       <ThemeProvider theme={themeState.theme}>
         <GlobalStyles />
         <SearchKeywordProvider>
-          <Navbar updateVideos={updateVideos} setCurrentPage={setCurrentPage} />
+          <Navbar updateVideos={updateVideos} />
           <SelectedVideoProvider>
             <Switch>
               <Route
                 exact
                 path="/"
+                render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
+              />
+              <Route
+                exact
+                path="/video"
+                render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
+              />
+              <Route
+                exact
+                path="/video/:videoId"
                 render={(props) => (
-                  <HomePage
+                  <VideoDetailsPage
                     {...props}
-                    YouTubeData={YouTubeData}
-                    setCurrentPage={setCurrentPage}
+                    relatedVideos={relatedVideos}
                     setRelatedVideos={setRelatedVideos}
-                    fetchRelatedVideos={fetchRelatedVideos}
                   />
                 )}
               />
-              <Switch>
-                <Route
-                  exact
-                  path="/video/:videoId"
-                  render={(props) => (
-                    <VideoDetailsPage
-                      {...props}
-                      setCurrentPage={setCurrentPage}
-                      relatedVideos={relatedVideos}
-                      setRelatedVideos={setRelatedVideos}
-                    />
-                  )}
-                />
-              </Switch>
+              <Route component={NotFound} />
             </Switch>
           </SelectedVideoProvider>
         </SearchKeywordProvider>

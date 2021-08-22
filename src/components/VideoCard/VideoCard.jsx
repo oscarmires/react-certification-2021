@@ -1,15 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
 import { Card, InfoArea, Thumbnail, ThumbnailImg } from './VideoCard.components';
-import { useSelectedVideo } from '../../global-context';
 
-const VideoCard = ({ videoItem, setCurrentPage, fetchRelatedVideos }) => {
-  const { setSelectedVideo } = useSelectedVideo();
+const VideoCard = ({ videoItem }) => {
+  const history = useHistory();
 
   const handleClick = (e) => {
-    setSelectedVideo(videoItem);
-    fetchRelatedVideos(videoItem.id.videoId);
-    setCurrentPage('VideoDetails');
+    history.push(`/video/${videoItem.id.videoId}`);
   };
 
   return (

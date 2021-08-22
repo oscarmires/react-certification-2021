@@ -20,6 +20,29 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, mat
   const videoId = match.params.videoId;
   YouTube.useYouTubePlayer(videoId);
 
+  const fetchSelectedVideoData = async function (videoId) {
+    try {
+      const res = await YouTube.getByVideoId(videoId);
+      setSelectedVideo(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchRelatedVideos = async function (videoId) {
+    try {
+      const relatedVideos = await YouTube.getRelatedVideos(videoId);
+      setRelatedVideos(relatedVideos);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateRelatedData = function (videoId) {
+    fetchSelectedVideoData(videoId);
+    fetchRelatedVideos(videoId);
+  };
+
   // discard videos that don't have 'snippet' attribute
   const filteredRelatedVideos = relatedVideos.filter((video) => video.snippet != null);
 
@@ -27,7 +50,7 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, mat
     <VideoListElement
       key={video.etag}
       videoItem={video}
-      setCurrentPage={setCurrentPage}
+      updateRelatedData={updateRelatedData}
     />
   ));
 
@@ -42,29 +65,15 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, mat
     return () => {
       setIsClientLoaded(false);
     };
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     // after GAPI client is loaded
-    async function fetchSelectedVideoData(videoId) {
-      try {
-        const res = await YouTube.getByVideoId(videoId);
-        setSelectedVideo(res);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function fetchRelatedVideos(videoId) {
-      const relatedVideos = await YouTube.getRelatedVideos(videoId);
-      setRelatedVideos(relatedVideos);
-    }
-
     if (isClientLoaded) {
-      console.log(isClientLoaded);
-      fetchSelectedVideoData(videoId);
-      fetchRelatedVideos(videoId);
+      updateRelatedData(videoId);
     }
+    // eslint-disable-next-line
   }, [isClientLoaded]);
 
   return (

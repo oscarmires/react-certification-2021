@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useSelectedVideo } from '../../global-context';
+import { useHistory } from 'react-router';
 
 import {
   Container,
@@ -11,13 +10,12 @@ import {
   InfoArea,
 } from './VideoListElement.components';
 
-const VideoListElement = ({ videoItem, setCurrentPage, fetchRelatedVideos }) => {
-  const { setSelectedVideo } = useSelectedVideo();
+const VideoListElement = ({ videoItem, updateRelatedData }) => {
+  const history = useHistory();
 
   const handleClick = (e) => {
-    setSelectedVideo(videoItem);
-    fetchRelatedVideos(videoItem.id.videoId);
-    setCurrentPage('VideoDetails');
+    history.push(`/video/${videoItem.id.videoId}`);
+    updateRelatedData(videoItem.id.videoId);
     window.player.loadVideoById(videoItem.id.videoId);
     document.getElementById('related-videos-list').scroll(0, 0);
     window.scroll(0, 0);

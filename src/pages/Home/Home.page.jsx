@@ -15,6 +15,7 @@ function HomePage({ YouTubeData, setCurrentPage, fetchRelatedVideos }) {
     return () => {
       setIsClientLoaded(false);
     };
+    // eslint-disable-next-line
   }, []);
 
   return (

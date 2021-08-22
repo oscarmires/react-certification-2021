@@ -9,14 +9,7 @@ const SearchResultsGrid = ({ resultItems, setCurrentPage, fetchRelatedVideos }) 
 
   const content = () => {
     if (resultItems.length > 0) {
-      return resultItems.map((video) => (
-        <VideoCard
-          key={video.etag}
-          videoItem={video}
-          setCurrentPage={setCurrentPage}
-          fetchRelatedVideos={fetchRelatedVideos}
-        />
-      ));
+      return resultItems.map((video) => <VideoCard key={video.etag} videoItem={video} />);
     } else {
       return (
         <BackgroundText data-testid="background-test">
