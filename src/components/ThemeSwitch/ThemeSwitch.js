@@ -8,6 +8,7 @@ export default function MaterialuiSwitch() {
 
   return (
     <Switch
+      data-testid="switch"
       checked={themeState.isDark}
       onChange={() => {
         dispatchThemeState({ type: 'toggle' });

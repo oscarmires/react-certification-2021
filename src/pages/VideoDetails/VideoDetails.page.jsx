@@ -13,7 +13,7 @@ import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
 import { useIsClientLoaded, useSelectedVideo } from '../../global-context';
 
-const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, match }) => {
+const VideoDetailsPage = ({ relatedVideos, setRelatedVideos, match }) => {
   const { selectedVideo, setSelectedVideo } = useSelectedVideo();
   const { isClientLoaded, setIsClientLoaded } = useIsClientLoaded();
 
@@ -64,6 +64,7 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, mat
 
     return () => {
       setIsClientLoaded(false);
+      setRelatedVideos([]);
     };
     // eslint-disable-next-line
   }, []);
@@ -77,7 +78,7 @@ const VideoDetailsPage = ({ setCurrentPage, relatedVideos, setRelatedVideos, mat
   }, [isClientLoaded]);
 
   return (
-    <PageContainer>
+    <PageContainer data-testid="video-details-page">
       <PlayerAndInfo>
         <VideoPlayer>
           <div id="player" data-testid="video-player"></div>

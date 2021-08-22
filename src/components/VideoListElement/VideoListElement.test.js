@@ -6,10 +6,15 @@ import { items } from '../../mock_data/youtube-videos-mock.json';
 import { SelectedVideoProvider } from '../../global-context';
 
 import YouTube from '../../util/YouTube';
+import { BrowserRouter } from 'react-router-dom';
+
+jest.mock('../../util/YouTube');
 
 describe('VideoListElement', () => {
-  const setCurrentPage = jest.fn();
-  const fetchRelatedVideos = jest.fn((id) => YouTube.getRelatedVideos(id));
+  const updateRelatedData = jest.fn((id) => {
+    YouTube.getRelatedVideos(id);
+    YouTube.getByVideoId(id);
+  });
   const setSelectedVideo = jest.fn();
 
   beforeEach(() => {
@@ -18,14 +23,15 @@ describe('VideoListElement', () => {
     container.scroll = jest.fn();
     document.body.appendChild(container);
     render(
-      <SelectedVideoProvider>
-        <VideoListElement
-          videoItem={items[0]}
-          setCurrentPage={setCurrentPage}
-          fetchRelatedVideos={fetchRelatedVideos}
-          setSelectedVideo={setSelectedVideo}
-        />
-      </SelectedVideoProvider>,
+      <BrowserRouter>
+        <SelectedVideoProvider>
+          <VideoListElement
+            videoItem={items[0]}
+            updateRelatedData={updateRelatedData}
+            setSelectedVideo={setSelectedVideo}
+          />
+        </SelectedVideoProvider>
+      </BrowserRouter>,
       document.getElementById('related-videos-list')
     );
   });
@@ -39,14 +45,15 @@ describe('VideoListElement', () => {
 
   it('calls function to fetch new related videos on click', () => {
     const getRelatedVideosSpy = jest.spyOn(YouTube, 'getRelatedVideos');
+    const getByVideoIdSpy = jest.spyOn(YouTube, 'getByVideoId');
     const container = screen.getByTestId('element-container');
     // mock YouTube's player object
     global.window.player = {};
     global.window.player.loadVideoById = jest.fn();
-    // mock
 
     fireEvent.click(container);
 
-    expect(getRelatedVideosSpy).toBeCalled();
+    expect(getRelatedVideosSpy).toBeCalledTimes(1);
+    expect(getByVideoIdSpy).toBeCalledTimes(1);
   });
 });

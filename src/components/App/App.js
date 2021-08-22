@@ -12,7 +12,7 @@ import {
   useThemeState,
   IsClientLoadedProvider,
 } from '../../global-context';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 
 function App() {
   const [YouTubeData, setYouTubeData] = useState(items);
@@ -41,11 +41,7 @@ function App() {
                 path="/"
                 render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
               />
-              <Route
-                exact
-                path="/video"
-                render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
-              />
+              <Redirect exact from="/video" to="/" />
               <Route
                 exact
                 path="/video/:videoId"

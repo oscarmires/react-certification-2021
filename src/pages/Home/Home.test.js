@@ -1,19 +1,18 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import { HomePage } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
-import { SearchKeywordProvider, SelectedVideoProvider } from '../../global-context';
+import { renderWithContext } from '../../util/testUtil';
 
 describe('VideoListElement', () => {
+  window.gapi = { load: jest.fn() };
   beforeEach(() => {
-    render(
-      <SearchKeywordProvider>
-        <SelectedVideoProvider>
-          <HomePage YouTubeData={items} />
-        </SelectedVideoProvider>
-      </SearchKeywordProvider>
-    );
+    renderWithContext(<HomePage YouTubeData={items} />);
+  });
+
+  it('sets GAPI client after mounting', () => {
+    expect(global.window.gapi.load).toBeCalled();
   });
 
   it('renders a title', () => {

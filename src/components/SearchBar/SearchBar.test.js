@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import SearchBar from './SearchBar';
 import YouTube from '../../util/YouTube';
 import { SearchKeywordProvider } from '../../global-context';
+import { renderWithRouter } from '../../util/testUtil';
 
 jest.mock('../../util/YouTube');
 
@@ -14,14 +15,15 @@ describe('SearchBar', () => {
   const updateSearchKeyword = jest.fn();
 
   beforeEach(() => {
-    render(
+    renderWithRouter(
       <SearchKeywordProvider>
         <SearchBar
           updateVideos={updateVideos}
           setCurrentPage={setCurrentPage}
           updateSearchKeyword={updateSearchKeyword}
         />
-      </SearchKeywordProvider>
+      </SearchKeywordProvider>,
+      '/'
     );
   });
 

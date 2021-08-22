@@ -1,21 +1,49 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import App from './App';
 import { ThemeStateProvider } from '../../global-context';
+import { renderWithRouter } from '../../util/testUtil';
+
+jest.mock('../../util/YouTube');
 
 describe('App', () => {
-  global.window.gapi = { load: jest.fn() };
-
-  beforeEach(() => {
-    render(
+  it("navigates to home page on route '/'", () => {
+    renderWithRouter(
       <ThemeStateProvider>
         <App />
-      </ThemeStateProvider>
+      </ThemeStateProvider>,
+      '/'
     );
+
+    const title = screen.getByText(/React challenge/i);
+
+    expect(title).toBeInTheDocument();
   });
 
-  it('sets GAPI after mounting', () => {
-    expect(global.window.gapi.load).toBeCalled();
+  it("navigates to VideoDetails page on route '/video/videId'", () => {
+    renderWithRouter(
+      <ThemeStateProvider>
+        <App />
+      </ThemeStateProvider>,
+      '/video/videoId'
+    );
+
+    const pageContainer = screen.getByTestId('video-details-page');
+
+    expect(pageContainer).toBeInTheDocument();
+  });
+
+  it('navigates to NotFound page on invalid route', () => {
+    renderWithRouter(
+      <ThemeStateProvider>
+        <App />
+      </ThemeStateProvider>,
+      '/invalid-site'
+    );
+
+    const notFoundMessage = screen.getByText(/404./);
+
+    expect(notFoundMessage).toBeInTheDocument();
   });
 });
