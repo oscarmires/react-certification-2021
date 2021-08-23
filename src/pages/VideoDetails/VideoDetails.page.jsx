@@ -11,14 +11,23 @@ import {
 
 import { VideoListElement } from '../../components';
 import YouTube from '../../util/YouTube';
-import { useIsClientLoaded, useSelectedVideo } from '../../global-context';
+import {
+  useActiveDropdown,
+  useIsClientLoaded,
+  useSelectedVideo,
+} from '../../global-context';
 
 const VideoDetailsPage = ({ relatedVideos, setRelatedVideos, match }) => {
   const { selectedVideo, setSelectedVideo } = useSelectedVideo();
   const { isClientLoaded, setIsClientLoaded } = useIsClientLoaded();
+  const { setActiveDropdown } = useActiveDropdown();
 
   const videoId = match.params.videoId;
   YouTube.useYouTubePlayer(videoId);
+
+  const closeDropdowns = (e) => {
+    setActiveDropdown('');
+  };
 
   const fetchSelectedVideoData = async function (videoId) {
     try {
@@ -65,6 +74,7 @@ const VideoDetailsPage = ({ relatedVideos, setRelatedVideos, match }) => {
     return () => {
       setIsClientLoaded(false);
       setRelatedVideos([]);
+      setSelectedVideo({});
     };
     // eslint-disable-next-line
   }, []);
@@ -78,7 +88,7 @@ const VideoDetailsPage = ({ relatedVideos, setRelatedVideos, match }) => {
   }, [isClientLoaded]);
 
   return (
-    <PageContainer data-testid="video-details-page">
+    <PageContainer data-testid="video-details-page" onClick={closeDropdowns}>
       <PlayerAndInfo>
         <VideoPlayer>
           <div id="player" data-testid="video-player"></div>

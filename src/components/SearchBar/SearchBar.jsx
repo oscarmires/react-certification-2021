@@ -4,12 +4,17 @@ import { useHistory } from 'react-router';
 
 import { SearchInput, Bar } from './SearchBar.components';
 import YouTube from '../../util/YouTube';
-import { useSearchKeyword } from '../../global-context';
+import { useActiveDropdown, useSearchKeyword } from '../../global-context';
 
 const SearchBar = ({ updateVideos }) => {
   const { setSearchKeyword } = useSearchKeyword();
+  const { setActiveDropdown } = useActiveDropdown();
   const history = useHistory();
   const [inputValue, setInputValue] = useState('');
+
+  const closeDropdowns = (e) => {
+    setActiveDropdown('');
+  };
 
   const handleEnter = async (e) => {
     if (e.keyCode === 13) {
@@ -27,7 +32,7 @@ const SearchBar = ({ updateVideos }) => {
   };
 
   return (
-    <Bar>
+    <Bar onClick={closeDropdowns}>
       <svg
         width="24px"
         height="24px"

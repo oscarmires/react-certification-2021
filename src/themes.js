@@ -48,13 +48,39 @@ export const lightTheme = {
   /* Cards */
   boxOnHover: '#eee',
 
-  /* button */
+  /* menu button */
   btnBurgerFill: '#fff',
   btnOnHover: '#666',
 
   /* VideoListItems */
   itemOnHover: '#ddd',
   borderColor: '#ccc',
+
+  /* Account popup */
+  accPopUpBackgroundColor: 'white',
+
+  /* button */
+  regularBackgroundColor: 'gray',
+  regularOutlineColor: 'gray',
+  regularTextColor: 'white',
+  regularHoverColor: '#898989',
+
+  primaryBackgroundColor: '#ddb01c',
+  primaryOutlineColor: '#ddb01c',
+  primaryHoverColor: '#e8bd33',
+  primaryTextColor: 'white',
+
+  dangerBackgroundColor: '#f7e1e1',
+  dangerOutlineColor: '#e21f1f',
+  dangerHoverColor: '#d3c2c2',
+
+  /* login form */
+  loginFormTextColor: '#111',
+  loginFormBackgroundColor: '#eee',
+  loginFormOnHOver: '#ddd',
+
+  /* menu */
+  menuSectionBorder: '#ddd',
 };
 
 export const darkTheme = {
@@ -72,11 +98,37 @@ export const darkTheme = {
   /* Cards */
   boxOnHover: '#444',
 
-  /* button */
+  /* menu button */
   btnBurgerFill: '#eee',
   btnOnHover: '#444',
 
   /* VideoListItems */
   itemOnHover: '#444',
   borderColor: '#444',
+
+  /* Account popup */
+  accPopUpBackgroundColor: '#444',
+
+  /* button */
+  regularBackgroundColor: 'gray',
+  regularOutlineColor: 'gray',
+  regularTextColor: 'white',
+  regularHoverColor: '#898989',
+
+  primaryBackgroundColor: '#756f49',
+  primaryOutlineColor: '#ffde0c',
+  primaryHoverColor: '#89814b',
+  primaryTextColor: '#ffde0c',
+
+  dangerBackgroundColor: '#6b4c4c',
+  dangerOutlineColor: '#ff6363',
+  dangerHoverColor: '#7f5a5a',
+
+  /* login form */
+  loginFormTextColor: '#fff',
+  loginFormBackgroundColor: '#2A2A2A',
+  loginFormOnHOver: '#333',
+
+  /* menu */
+  menuSectionBorder: '#555',
 };

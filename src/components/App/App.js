@@ -11,6 +11,8 @@ import {
   SearchKeywordProvider,
   useThemeState,
   IsClientLoadedProvider,
+  SessionDataProvider,
+  ActiveDropdownProvider,
 } from '../../global-context';
 import { Switch, Route, Redirect } from 'react-router';
 
@@ -30,34 +32,38 @@ function App() {
 
   return (
     <IsClientLoadedProvider>
-      <ThemeProvider theme={themeState.theme}>
-        <GlobalStyles />
-        <SearchKeywordProvider>
-          <Navbar updateVideos={updateVideos} />
-          <SelectedVideoProvider>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
-              />
-              <Redirect exact from="/video" to="/" />
-              <Route
-                exact
-                path="/video/:videoId"
-                render={(props) => (
-                  <VideoDetailsPage
-                    {...props}
-                    relatedVideos={relatedVideos}
-                    setRelatedVideos={setRelatedVideos}
+      <SessionDataProvider>
+        <ThemeProvider theme={themeState.theme}>
+          <GlobalStyles />
+          <SearchKeywordProvider>
+            <ActiveDropdownProvider>
+              <Navbar updateVideos={updateVideos} />
+              <SelectedVideoProvider>
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={(props) => <HomePage {...props} YouTubeData={YouTubeData} />}
                   />
-                )}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </SelectedVideoProvider>
-        </SearchKeywordProvider>
-      </ThemeProvider>
+                  <Redirect exact from="/video" to="/" />
+                  <Route
+                    exact
+                    path="/video/:videoId"
+                    render={(props) => (
+                      <VideoDetailsPage
+                        {...props}
+                        relatedVideos={relatedVideos}
+                        setRelatedVideos={setRelatedVideos}
+                      />
+                    )}
+                  />
+                  <Route component={NotFound} />
+                </Switch>
+              </SelectedVideoProvider>
+            </ActiveDropdownProvider>
+          </SearchKeywordProvider>
+        </ThemeProvider>
+      </SessionDataProvider>
     </IsClientLoadedProvider>
   );
 }

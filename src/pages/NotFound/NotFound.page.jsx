@@ -1,4 +1,5 @@
 import React from 'react';
+import { useActiveDropdown } from '../../global-context';
 
 import {
   NotFoundContainer,
@@ -7,8 +8,14 @@ import {
 } from './NotFound.components';
 
 function NotFound() {
+  const { setActiveDropdown } = useActiveDropdown();
+
+  const closeDropdowns = (e) => {
+    setActiveDropdown('');
+  };
+
   return (
-    <NotFoundContainer>
+    <NotFoundContainer onClick={closeDropdowns}>
       <NotFoundInfoArea>
         <NotFoundTitle>404 - Not found!</NotFoundTitle>
         <p>The requested page can't be loaded because it was not found.</p>

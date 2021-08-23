@@ -5,3 +5,6 @@ export { default as ThemeSwitch } from './ThemeSwitch/ThemeSwitch';
 export { default as SearchResultsGrid } from './SearchResultsGrid/SearchResultsGrid';
 export { default as VideoCard } from './VideoCard/VideoCard';
 export { default as VideoListElement } from './VideoListElement/VideoListElement';
+export { default as AccountPopUp } from './AccountPopUp/AccountPopUp';
+export { default as Button } from './Button/Button';
+export { default as DropdownMenu } from './DropdownMenu/DropdownMenu';

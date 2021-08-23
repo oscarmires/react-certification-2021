@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Header = styled.header`
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 `;
 
 export const Nav = styled.nav`

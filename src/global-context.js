@@ -133,6 +133,111 @@ function useIsClientLoaded() {
   return context;
 }
 
+/**
+ * Session data
+ *
+ * isLoggedIn, favoriteVideos, name, id
+ */
+
+const SessionDataContext = React.createContext();
+
+function sessionDataReducer(state, action) {
+  switch (action.type) {
+    case 'login':
+      return {
+        ...state,
+        isLoggedIn: true,
+        id: action.apiUser.id,
+        name: action.apiUser.name,
+        favoriteVideos: [],
+      };
+    case 'logout':
+      const favoriteVideosIdArr = state.favoriteVideos.map((video) => video.id.videoId);
+      const userDataObj = {
+        favoriteVideosIdArr: favoriteVideosIdArr,
+      };
+      const key = `WizReactChalUsr${state.id}`;
+      window.localStorage.setItem(key, JSON.stringify(userDataObj));
+      return {
+        ...state,
+        isLoggedIn: false,
+        id: '',
+        name: '',
+        favoriteVideos: [],
+      };
+    case 'saveVideo':
+      return {
+        ...state,
+        favoriteVideos: state.favoriteVideos.push(action.value),
+      };
+    case 'setFavoriteVideos':
+      return {
+        ...state,
+        favoriteVideos: action.value,
+      };
+    case 'deleteSavedVideo':
+      return {
+        ...state,
+        favoriteVideos: state.favoriteVideos.filter(
+          (video) => video.id.videoId !== action.value
+        ),
+      };
+    default:
+      break;
+  }
+}
+
+function SessionDataProvider({ children }) {
+  const [sessionData, dispatchSessionData] = useReducer(sessionDataReducer, {
+    isLoggedIn: false,
+    id: '',
+    name: '',
+    favoriteVideos: [],
+  });
+  const value = { sessionData, dispatchSessionData };
+
+  return (
+    <SessionDataContext.Provider value={value}>{children}</SessionDataContext.Provider>
+  );
+}
+
+function useSessionData() {
+  const context = useContext(SessionDataContext);
+  if (context === undefined) {
+    throw new Error(
+      `useSessionData must be used within a SessionDataProvider (context is <<${context}>>)`
+    );
+  }
+  return context;
+}
+
+/**
+ * Active dropdown
+ */
+const ActiveDropdownContext = React.createContext();
+
+function ActiveDropdownProvider({ children }) {
+  const [activeDropdown, setActiveDropdown] = useState('');
+
+  const value = { activeDropdown, setActiveDropdown };
+
+  return (
+    <ActiveDropdownContext.Provider value={value}>
+      {children}
+    </ActiveDropdownContext.Provider>
+  );
+}
+
+function useActiveDropdown() {
+  const context = useContext(ActiveDropdownContext);
+  if (context === undefined) {
+    throw new Error(
+      `useActiveDropdown must be used within a ActiveDropdownProvider (context is <<${context}>>)`
+    );
+  }
+  return context;
+}
+
 export {
   SelectedVideoProvider,
   useSelectedVideo,
@@ -142,4 +247,8 @@ export {
   useThemeState,
   IsClientLoadedProvider,
   useIsClientLoaded,
+  SessionDataProvider,
+  useSessionData,
+  ActiveDropdownProvider,
+  useActiveDropdown,
 };
