@@ -2,14 +2,25 @@ import React from 'react';
 
 import { CardsGrid, BackgroundText } from './SearchResultsGrid.components';
 import { VideoCard } from '..';
-import { useSearchKeyword } from '../../global-context';
+import { useSearchKeyword, useSessionData } from '../../global-context';
 
-const SearchResultsGrid = ({ resultItems, setCurrentPage, fetchRelatedVideos }) => {
+const SearchResultsGrid = ({ resultItems }) => {
   const { searchKeyword } = useSearchKeyword();
+  const { sessionData } = useSessionData();
+
+  const checkIsFavorite = (videoId) => {
+    return sessionData.favoriteVideos.some((video) => video.id.videoId === videoId);
+  };
 
   const content = () => {
     if (resultItems.length > 0) {
-      return resultItems.map((video) => <VideoCard key={video.etag} videoItem={video} />);
+      return resultItems.map((video) => (
+        <VideoCard
+          key={video.etag}
+          videoItem={video}
+          asFavorite={checkIsFavorite(video.id.videoId)}
+        />
+      ));
     } else {
       return (
         <BackgroundText data-testid="background-test">

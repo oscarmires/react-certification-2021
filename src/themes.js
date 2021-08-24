@@ -70,9 +70,10 @@ export const lightTheme = {
   primaryHoverColor: '#e8bd33',
   primaryTextColor: 'white',
 
-  dangerBackgroundColor: '#f7e1e1',
+  dangerBackgroundColor: '#e21f1f',
   dangerOutlineColor: '#e21f1f',
-  dangerHoverColor: '#d3c2c2',
+  dangerHoverColor: '#e03c3c',
+  dangerTextColor: 'white',
 
   /* login form */
   loginFormTextColor: '#111',
@@ -120,9 +121,10 @@ export const darkTheme = {
   primaryHoverColor: '#89814b',
   primaryTextColor: '#ffde0c',
 
-  dangerBackgroundColor: '#6b4c4c',
+  dangerBackgroundColor: '#422f2f',
   dangerOutlineColor: '#ff6363',
-  dangerHoverColor: '#7f5a5a',
+  dangerHoverColor: '#634747',
+  dangerTextColor: '#ff6363',
 
   /* login form */
   loginFormTextColor: '#fff',

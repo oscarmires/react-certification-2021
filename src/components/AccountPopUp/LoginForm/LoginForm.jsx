@@ -4,7 +4,6 @@ import { FormContainer, FormInput } from './LoginForm.components';
 import { Button } from '../..';
 import loginApi from '../../../util/login.api';
 import { useActiveDropdown, useSessionData } from '../../../global-context';
-import YouTube from '../../../util/YouTube';
 
 function LoginForm() {
   const [usernameVal, setUsernameVal] = useState('');
@@ -25,32 +24,15 @@ function LoginForm() {
     try {
       const user = await loginApi(usernameVal, passwordVal);
       const key = `WizReactChalUsr${user.id}`;
-      const favoriteVideosIdText = window.localStorage.getItem(key);
       dispatchSessionData({ type: 'login', apiUser: user });
 
-      const favoriteVideosIdArr = favoriteVideosIdText
-        ? JSON.parse(favoriteVideosIdText).favoriteVideosIdArr
+      const favoriteVideosText = window.localStorage.getItem(key);
+      const favoriteVideos = favoriteVideosText
+        ? JSON.parse(favoriteVideosText).favoriteVideos
         : [];
 
-      const favoriteVideos = [];
-      let videoItem = {};
-      let videoId = '';
-
-      for (let i = 0; i < favoriteVideosIdArr.length; i++) {
-        videoId = favoriteVideosIdArr[i];
-        try {
-          videoItem = await YouTube.getByVideoId(videoId);
-          favoriteVideos.push(videoItem);
-        } catch (error) {
-          console.log(error);
-          videoItem = {
-            id: { videoId: videoId },
-            snippet: { title: 'Video not found', description: '' },
-          };
-        }
-      }
-
       dispatchSessionData({ type: 'setFavoriteVideos', value: favoriteVideos });
+
       setActiveDropdown('');
     } catch (error) {
       console.log(error);

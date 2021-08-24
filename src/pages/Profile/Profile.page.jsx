@@ -2,16 +2,31 @@ import React, { useEffect } from 'react';
 
 import {
   AccountInfoArea,
+  DefaultArea,
+  LoginMessage,
   FavoriteVideosGrid,
   ProfilePageContainer,
 } from './Profile.components';
 import YouTube from '../../util/YouTube';
-import { useIsClientLoaded } from '../../global-context';
-import { items } from '../../mock_data/youtube-videos-mock.json';
+import {
+  useIsClientLoaded,
+  useActiveDropdown,
+  useSessionData,
+} from '../../global-context';
 import { VideoCard } from '../../components';
 
 function ProfilePage() {
   const { setIsClientLoaded } = useIsClientLoaded();
+  const { setActiveDropdown } = useActiveDropdown();
+  const { sessionData } = useSessionData();
+
+  const closeDropdowns = (e) => {
+    if (e.target.id !== 'login-message') setActiveDropdown('');
+  };
+
+  const showLogIn = (e) => {
+    setActiveDropdown('account');
+  };
 
   useEffect(() => {
     // set Google API
@@ -24,20 +39,37 @@ function ProfilePage() {
   }, []);
 
   return (
-    <ProfilePageContainer data-testid="profile-page">
+    <ProfilePageContainer data-testid="profile-page" onClick={closeDropdowns}>
       <h1>Account</h1>
-      <AccountInfoArea>
-        <h2>[Name]</h2>
-        <p>Username: [username]</p>
-        <p>Id: [id]</p>
-        <p>Password: [password]</p>
-      </AccountInfoArea>
-      <FavoriteVideosGrid>
-        <h2>Favorite videos</h2>
-        {items.map((item) => (
-          <VideoCard videoItem={item} asFavorite></VideoCard>
-        ))}
-      </FavoriteVideosGrid>
+      {sessionData.isLoggedIn ? (
+        <>
+          {' '}
+          <AccountInfoArea>
+            <h2>{sessionData.name}</h2>
+            <p>Id: {sessionData.id}</p>
+            <p>
+              Avatar url: <a href={sessionData.avatarUrl}>Link</a>
+            </p>
+          </AccountInfoArea>
+          <FavoriteVideosGrid>
+            <h2>Favorite videos</h2>
+            {sessionData.favoriteVideos.length > 0 ? (
+              sessionData.favoriteVideos.map((item) => (
+                <VideoCard videoItem={item} key={item.etag} asFavorite></VideoCard>
+              ))
+            ) : (
+              <p>You don't have favorite videos</p>
+            )}
+          </FavoriteVideosGrid>
+        </>
+      ) : (
+        <DefaultArea>
+          <LoginMessage onClick={showLogIn} id="login-message">
+            <span style={{ textDecoration: 'underline' }}>Log in</span> to see account
+            details.
+          </LoginMessage>
+        </DefaultArea>
+      )}
     </ProfilePageContainer>
   );
 }

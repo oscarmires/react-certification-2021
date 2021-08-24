@@ -1,6 +1,7 @@
 import React, { useState, useContext, useReducer } from 'react';
 
 import { lightTheme, darkTheme } from './themes';
+import { items } from './mock_data/youtube-videos-mock.json';
 
 /**
  * Selected video context
@@ -141,6 +142,10 @@ function useIsClientLoaded() {
 
 const SessionDataContext = React.createContext();
 
+let userDataObj = {};
+let key = '';
+let favoritesCopy = [];
+
 function sessionDataReducer(state, action) {
   switch (action.type) {
     case 'login':
@@ -149,26 +154,32 @@ function sessionDataReducer(state, action) {
         isLoggedIn: true,
         id: action.apiUser.id,
         name: action.apiUser.name,
+        avatarUrl: action.apiUser.avatarUrl,
         favoriteVideos: [],
       };
     case 'logout':
-      const favoriteVideosIdArr = state.favoriteVideos.map((video) => video.id.videoId);
-      const userDataObj = {
-        favoriteVideosIdArr: favoriteVideosIdArr,
-      };
-      const key = `WizReactChalUsr${state.id}`;
-      window.localStorage.setItem(key, JSON.stringify(userDataObj));
       return {
         ...state,
         isLoggedIn: false,
         id: '',
         name: '',
+        avatarUrl: null,
         favoriteVideos: [],
       };
     case 'saveVideo':
+      // save to local storage
+      favoritesCopy = [...state.favoriteVideos];
+      favoritesCopy.push(action.value);
+      userDataObj = {
+        favoriteVideos: favoritesCopy,
+      };
+      key = `WizReactChalUsr${state.id}`;
+      window.localStorage.setItem(key, JSON.stringify(userDataObj));
+
+      // update state
       return {
         ...state,
-        favoriteVideos: state.favoriteVideos.push(action.value),
+        favoriteVideos: favoritesCopy,
       };
     case 'setFavoriteVideos':
       return {
@@ -176,24 +187,46 @@ function sessionDataReducer(state, action) {
         favoriteVideos: action.value,
       };
     case 'deleteSavedVideo':
+      // remove video id from local storage
+      favoritesCopy = [...state.favoriteVideos];
+      favoritesCopy = favoritesCopy.filter(
+        (video) => video.id.videoId !== action.value.id.videoId
+      );
+
+      userDataObj = {
+        favoriteVideos: favoritesCopy,
+      };
+      key = `WizReactChalUsr${state.id}`;
+      window.localStorage.setItem(key, JSON.stringify(userDataObj));
+
+      // update state
       return {
         ...state,
-        favoriteVideos: state.favoriteVideos.filter(
-          (video) => video.id.videoId !== action.value
-        ),
+        favoriteVideos: favoritesCopy,
       };
     default:
       break;
   }
 }
 
-function SessionDataProvider({ children }) {
-  const [sessionData, dispatchSessionData] = useReducer(sessionDataReducer, {
-    isLoggedIn: false,
-    id: '',
-    name: '',
-    favoriteVideos: [],
-  });
+function SessionDataProvider({ children, mockLogIn }) {
+  const initialState = mockLogIn
+    ? {
+        isLoggedIn: true,
+        id: '123',
+        name: 'Wizeline',
+        avatarUrl:
+          'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+        favoriteVideos: items,
+      }
+    : {
+        isLoggedIn: false,
+        id: '',
+        name: '',
+        avatarUrl: null,
+        favoriteVideos: [],
+      };
+  const [sessionData, dispatchSessionData] = useReducer(sessionDataReducer, initialState);
   const value = { sessionData, dispatchSessionData };
 
   return (

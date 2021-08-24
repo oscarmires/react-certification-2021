@@ -3,16 +3,18 @@ import { render, screen } from '@testing-library/react';
 
 import { VideoCard } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
-import { SelectedVideoProvider } from '../../global-context';
+import { SelectedVideoProvider, SessionDataProvider } from '../../global-context';
 
 let videoCard;
 
 describe('VideoCard', () => {
   beforeEach(() => {
     videoCard = render(
-      <SelectedVideoProvider>
-        <VideoCard videoItem={items[0]} />
-      </SelectedVideoProvider>
+      <SessionDataProvider mockLogIn>
+        <SelectedVideoProvider>
+          <VideoCard videoItem={items[0]} />
+        </SelectedVideoProvider>
+      </SessionDataProvider>
     );
   });
 
@@ -30,4 +32,6 @@ describe('VideoCard', () => {
     const thumbnail = screen.queryByText(items[0].snippet.title);
     expect(thumbnail).toBeInTheDocument();
   });
+
+  it('displays a button on hover', () => {});
 });

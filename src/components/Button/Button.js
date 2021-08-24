@@ -38,7 +38,7 @@ const Button = styled.button`
       props.danger &&
       css`
         background-color: ${(props) => props.theme.dangerBackgroundColor};
-        color: ${(props) => props.theme.dangerOutlineColor};
+        color: ${(props) => props.theme.dangerTextColor};
         border: 1px solid ${(props) => props.theme.dangerOutlineColor};
         font-weight: bold;
 

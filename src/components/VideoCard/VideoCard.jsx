@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 
 import {
@@ -13,7 +13,8 @@ import { useSessionData } from '../../global-context';
 
 const VideoCard = ({ videoItem, asFavorite }) => {
   const history = useHistory();
-  const { sessionData } = useSessionData();
+  const { sessionData, dispatchSessionData } = useSessionData();
+  const [isFavorite, setIsFavorite] = useState(asFavorite);
 
   const handleClick = (e) => {
     if (e.target.tagName !== 'BUTTON') {
@@ -21,8 +22,14 @@ const VideoCard = ({ videoItem, asFavorite }) => {
     }
   };
 
-  const deleteVideo = (e) => {
-    console.log('DELETE');
+  const removeVideo = (e) => {
+    dispatchSessionData({ type: 'deleteSavedVideo', value: videoItem });
+    setIsFavorite(false);
+  };
+
+  const addVideo = (videoItem, e) => {
+    dispatchSessionData({ type: 'saveVideo', value: videoItem });
+    setIsFavorite(true);
   };
 
   return (
@@ -39,12 +46,12 @@ const VideoCard = ({ videoItem, asFavorite }) => {
       </InfoArea>
       {sessionData.isLoggedIn && (
         <ButtonContainer className="btn-container">
-          {asFavorite ? (
-            <Button width="120px" danger onClick={deleteVideo}>
+          {isFavorite ? (
+            <Button width="120px" danger onClick={removeVideo.bind(this, videoItem)}>
               Remove
             </Button>
           ) : (
-            <Button width="180px" primary>
+            <Button width="180px" primary onClick={addVideo.bind(this, videoItem)}>
               Add to favorites
             </Button>
           )}

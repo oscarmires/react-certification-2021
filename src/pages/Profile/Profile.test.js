@@ -4,6 +4,8 @@ import { renderWithContext } from '../../util/testUtil';
 
 import ProfilePage from './Profile.page';
 
+jest.mock('../../util/YouTube');
+
 describe('profile', () => {
   beforeEach(() => {
     renderWithContext(<ProfilePage />);

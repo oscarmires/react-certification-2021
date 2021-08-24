@@ -43,12 +43,19 @@ function DropdownMenu() {
     setActiveDropdown('');
   };
 
+  const goToFavoriteVideos = (e) => {
+    history.push('/account');
+    setActiveDropdown('');
+  };
+
   return (
     <DropdownMenuContainer style={{ display: displayVal }}>
       <MenuText>Site navigation</MenuText>
       <Section id="site-navigation">
         <MenuItem onClick={goHome}>Home</MenuItem>
-        {sessionData.isLoggedIn && <MenuItem>Favorite videos</MenuItem>}
+        {sessionData.isLoggedIn && (
+          <MenuItem onClick={goToFavoriteVideos}>Favorite videos</MenuItem>
+        )}
       </Section>
       <MenuText>Site preferences</MenuText>
       <Section id="site-preferences">

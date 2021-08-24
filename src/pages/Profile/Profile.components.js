@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const infoAreaWidth = '300px';
+const infoAreaHeight = '170px';
 const titleHeight = '102px';
 
 export const ProfilePageContainer = styled.main`
@@ -27,6 +28,7 @@ export const AccountInfoArea = styled.div`
   padding: 25px;
   border-right: 1px solid ${(props) => props.theme.borderColor};
   box-shadow: 0 5px 5px ${(props) => props.theme.shadowColor};
+  overflow: hidden;
 
   & h2 {
     margin: 0;
@@ -35,6 +37,22 @@ export const AccountInfoArea = styled.div`
 
   & p {
     margin: 5px 0;
+  }
+
+  & a {
+    color: ${(props) => props.theme.textColor};
+  }
+
+  & a:visited {
+    color: ${(props) => props.theme.textColor};
+  }
+
+  @media only screen and (max-width: 950px) {
+    width: 100%;
+    height: ${infoAreaHeight};
+    border-right: 0;
+    border-bottom: 1px solid ${(props) => props.theme.borderColor};
+    box-shadow: 0 1px 5px ${(props) => props.theme.shadowColor};
   }
 `;
 
@@ -51,5 +69,35 @@ export const FavoriteVideosGrid = styled.div`
     margin: 0;
     margin-bottom: 20px;
     width: 100%;
+  }
+
+  @media only screen and (max-width: 950px) {
+    width: 100%;
+    min-height: calc(100vh - ${titleHeight} - ${infoAreaWidth});
+    height: auto;
+    overflow: auto;
+  }
+`;
+
+export const DefaultArea = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - ${titleHeight});
+`;
+
+export const LoginMessage = styled.div`
+  width: 80%;
+  font-size: 48px;
+  text-align: center;
+  padding: 30px;
+  border-radius: 20px;
+  color: gray;
+  transition: background-color 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.itemOnHover};
   }
 `;
