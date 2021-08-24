@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles } from '../../themes';
-import { HomePage, NotFound, VideoDetailsPage } from '../../pages';
+import { HomePage, NotFound, ProfilePage, VideoDetailsPage } from '../../pages';
 import { items } from '../../mock_data/youtube-videos-mock.json';
 import { Navbar } from '../../components';
 import {
@@ -56,6 +56,11 @@ function App() {
                         setRelatedVideos={setRelatedVideos}
                       />
                     )}
+                  />
+                  <Route
+                    exact
+                    path="/account"
+                    render={(props) => <ProfilePage {...props} />}
                   />
                   <Route component={NotFound} />
                 </Switch>

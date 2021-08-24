@@ -9,10 +9,19 @@ export const Card = styled.div`
   box-shadow: 1px 1px 5px ${(props) => props.theme.shadowColor};
   margin: 10px;
   transition: background-color 0.2s;
+  position: relative;
 
   &:hover {
     background-color: ${(props) => props.theme.boxOnHover};
     cursor: pointer;
+  }
+
+  &:hover .btn-container {
+    opacity: 1;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
 `;
 
@@ -46,4 +55,16 @@ export const CardsGrid = styled.div`
   justify-content: center;
   width: 90%;
   margin: 0 auto;
+`;
+
+export const ButtonContainer = styled.div`
+  height: min-content;
+  width: min-content;
+  color: black;
+  text-decoration: none;
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  top: 120px;
+  right: 10px;
 `;

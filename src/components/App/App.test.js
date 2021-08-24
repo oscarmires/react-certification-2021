@@ -34,6 +34,19 @@ describe('App', () => {
     expect(pageContainer).toBeInTheDocument();
   });
 
+  it("navigates to ProfilePage page on route '/account'", () => {
+    renderWithRouter(
+      <ThemeStateProvider>
+        <App />
+      </ThemeStateProvider>,
+      '/account'
+    );
+
+    const pageContainer = screen.getByTestId('profile-page');
+
+    expect(pageContainer).toBeInTheDocument();
+  });
+
   it('navigates to NotFound page on invalid route', () => {
     renderWithRouter(
       <ThemeStateProvider>
