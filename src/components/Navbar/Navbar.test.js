@@ -4,16 +4,28 @@ import { render, screen } from '@testing-library/react';
 import { Navbar } from '../index';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from '../../themes';
-import { SearchKeywordProvider } from '../../global-context';
+import {
+  ActiveDropdownProvider,
+  SearchKeywordProvider,
+  SessionDataProvider,
+  ThemeStateProvider,
+  useSessionData,
+} from '../../global-context';
 
 describe('Navbar', () => {
   beforeEach(() => {
     render(
-      <ThemeProvider theme={lightTheme}>
-        <SearchKeywordProvider>
-          <Navbar />
-        </SearchKeywordProvider>
-      </ThemeProvider>
+      <ThemeStateProvider>
+        <SessionDataProvider>
+          <ActiveDropdownProvider>
+            <ThemeProvider theme={lightTheme}>
+              <SearchKeywordProvider>
+                <Navbar />
+              </SearchKeywordProvider>
+            </ThemeProvider>
+          </ActiveDropdownProvider>
+        </SessionDataProvider>
+      </ThemeStateProvider>
     );
   });
 

@@ -8,6 +8,7 @@ export const DropdownMenuContainer = styled.div`
   max-height: fit-content;
   position: fixed;
   top: 50px;
+  left: 10px;
   z-index: 1;
   background-color: ${(props) => props.theme.accPopUpBackgroundColor};
   color: ${(props) => props.theme.textColor};

@@ -4,8 +4,14 @@ import { act } from 'react-dom/test-utils';
 
 import SearchBar from './SearchBar';
 import YouTube from '../../util/YouTube';
-import { SearchKeywordProvider } from '../../global-context';
+import {
+  ActiveDropdownProvider,
+  SearchKeywordProvider,
+  SessionDataProvider,
+  ThemeStateProvider,
+} from '../../global-context';
 import { renderWithRouter } from '../../util/testUtil';
+import { ThemeProvider } from 'styled-components';
 
 jest.mock('../../util/YouTube');
 
@@ -16,13 +22,19 @@ describe('SearchBar', () => {
 
   beforeEach(() => {
     renderWithRouter(
-      <SearchKeywordProvider>
-        <SearchBar
-          updateVideos={updateVideos}
-          setCurrentPage={setCurrentPage}
-          updateSearchKeyword={updateSearchKeyword}
-        />
-      </SearchKeywordProvider>,
+      <ThemeStateProvider>
+        <SessionDataProvider>
+          <ActiveDropdownProvider>
+            <SearchKeywordProvider>
+              <SearchBar
+                updateVideos={updateVideos}
+                setCurrentPage={setCurrentPage}
+                updateSearchKeyword={updateSearchKeyword}
+              />
+            </SearchKeywordProvider>
+          </ActiveDropdownProvider>
+        </SessionDataProvider>
+      </ThemeStateProvider>,
       '/'
     );
   });
