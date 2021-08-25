@@ -62,7 +62,8 @@ export const FavoriteVideosGrid = styled.div`
   height: calc(100% - ${titleHeight});
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
+  align-content: flex-start;
   overflow: scroll;
 
   & h2 {

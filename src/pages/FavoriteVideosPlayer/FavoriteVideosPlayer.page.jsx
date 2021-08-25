@@ -31,7 +31,7 @@ const FavoriteVideosPlayerPage = ({ match }) => {
       setSelectedVideo({});
     };
     // eslint-disable-next-line
-  }, [match]);
+  }, match);
 
   const changeVideo = (videoId) => {
     setSelectedVideo(
