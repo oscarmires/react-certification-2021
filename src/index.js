@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import { App } from './components';
-import { ThemeStateProvider } from './global-context';
+import { ThemeStateProvider, SessionDataProvider } from './global-context';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeStateProvider>
-        <App />
-      </ThemeStateProvider>
+      <SessionDataProvider>
+        <ThemeStateProvider>
+          <App />
+        </ThemeStateProvider>
+      </SessionDataProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

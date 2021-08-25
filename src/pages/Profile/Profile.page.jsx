@@ -65,8 +65,8 @@ function ProfilePage() {
       ) : (
         <DefaultArea>
           <LoginMessage onClick={showLogIn} id="login-message">
-            <span style={{ textDecoration: 'underline' }}>Log in</span> to see account
-            details.
+            <span style={{ textDecoration: 'underline' }}>Log in</span> to enter this
+            page.
           </LoginMessage>
         </DefaultArea>
       )}

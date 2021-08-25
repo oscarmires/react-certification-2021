@@ -9,8 +9,8 @@ import { items } from './mock_data/youtube-videos-mock.json';
 
 const SelectedVideoContext = React.createContext();
 
-function SelectedVideoProvider({ children }) {
-  const [selectedVideo, setSelectedVideo] = useState({});
+function SelectedVideoProvider({ children, mock }) {
+  const [selectedVideo, setSelectedVideo] = useState(mock ? items[0] : {});
 
   const value = { selectedVideo, setSelectedVideo };
   return (

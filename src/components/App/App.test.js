@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 
 import App from './App';
-import { ThemeStateProvider } from '../../global-context';
+import { SessionDataProvider, ThemeStateProvider } from '../../global-context';
 import { renderWithRouter } from '../../util/testUtil';
 
 jest.mock('../../util/YouTube');
@@ -10,9 +10,11 @@ jest.mock('../../util/YouTube');
 describe('App', () => {
   it("navigates to home page on route '/'", () => {
     renderWithRouter(
-      <ThemeStateProvider>
-        <App />
-      </ThemeStateProvider>,
+      <SessionDataProvider>
+        <ThemeStateProvider>
+          <App />
+        </ThemeStateProvider>
+      </SessionDataProvider>,
       '/'
     );
 
@@ -23,9 +25,11 @@ describe('App', () => {
 
   it("navigates to VideoDetails page on route '/video/videId'", () => {
     renderWithRouter(
-      <ThemeStateProvider>
-        <App />
-      </ThemeStateProvider>,
+      <SessionDataProvider>
+        <ThemeStateProvider>
+          <App />
+        </ThemeStateProvider>
+      </SessionDataProvider>,
       '/video/videoId'
     );
 
@@ -36,9 +40,11 @@ describe('App', () => {
 
   it("navigates to ProfilePage page on route '/account'", () => {
     renderWithRouter(
-      <ThemeStateProvider>
-        <App />
-      </ThemeStateProvider>,
+      <SessionDataProvider>
+        <ThemeStateProvider>
+          <App />
+        </ThemeStateProvider>
+      </SessionDataProvider>,
       '/account'
     );
 
@@ -49,9 +55,11 @@ describe('App', () => {
 
   it('navigates to NotFound page on invalid route', () => {
     renderWithRouter(
-      <ThemeStateProvider>
-        <App />
-      </ThemeStateProvider>,
+      <SessionDataProvider>
+        <ThemeStateProvider>
+          <App />
+        </ThemeStateProvider>
+      </SessionDataProvider>,
       '/invalid-site'
     );
 

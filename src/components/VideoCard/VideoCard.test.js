@@ -4,12 +4,13 @@ import { render, screen } from '@testing-library/react';
 import { VideoCard } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
 import { SelectedVideoProvider, SessionDataProvider } from '../../global-context';
+import { renderWithRouter } from '../../util/testUtil';
 
 let videoCard;
 
 describe('VideoCard', () => {
   beforeEach(() => {
-    videoCard = render(
+    videoCard = renderWithRouter(
       <SessionDataProvider mockLogIn>
         <SelectedVideoProvider>
           <VideoCard videoItem={items[0]} />

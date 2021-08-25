@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useRouteMatch } from 'react-router';
 
 import {
   ButtonContainer,
@@ -15,14 +15,24 @@ const VideoCard = ({ videoItem, asFavorite }) => {
   const history = useHistory();
   const { sessionData, dispatchSessionData } = useSessionData();
   const [isFavorite, setIsFavorite] = useState(asFavorite);
+  const { path } = useRouteMatch();
 
   const handleClick = (e) => {
     if (e.target.tagName !== 'BUTTON') {
-      history.push(`/video/${videoItem.id.videoId}`);
+      switch (path) {
+        case '/':
+          history.push(`/video/${videoItem.id.videoId}`);
+          break;
+        case '/account':
+          history.push(`/account/favorite-videos-player/${videoItem.id.videoId}`);
+          break;
+        default:
+          history.push('/');
+      }
     }
   };
 
-  const removeVideo = (e) => {
+  const removeVideo = (videoItem, e) => {
     dispatchSessionData({ type: 'deleteSavedVideo', value: videoItem });
     setIsFavorite(false);
   };

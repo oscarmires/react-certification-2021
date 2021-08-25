@@ -4,11 +4,16 @@ import { screen } from '@testing-library/react';
 import { HomePage } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
 import { renderWithContext } from '../../util/testUtil';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('VideoListElement', () => {
   window.gapi = { load: jest.fn() };
   beforeEach(() => {
-    renderWithContext(<HomePage YouTubeData={items} />);
+    renderWithContext(
+      <BrowserRouter>
+        <HomePage YouTubeData={items} />
+      </BrowserRouter>
+    );
   });
 
   it('sets GAPI client after mounting', () => {
