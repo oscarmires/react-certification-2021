@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { VideoCard } from '../';
 import { items } from '../../mock_data/youtube-videos-mock.json';
@@ -35,4 +35,38 @@ describe('VideoCard', () => {
   });
 
   it('displays a button on hover', () => {});
+});
+
+describe('VideoCard buttons', () => {
+  it('saves video as favorite when it has not been saved', () => {
+    renderWithRouter(
+      <SessionDataProvider mockLogIn>
+        <SelectedVideoProvider>
+          <VideoCard videoItem={items[0]} />
+        </SelectedVideoProvider>
+      </SessionDataProvider>
+    );
+
+    const makeFavoriteBtn = screen.getByTestId('makeFavoriteBtn');
+    fireEvent.click(makeFavoriteBtn);
+
+    const noFavoriteBtn = screen.getByTestId('noFavoriteBtn');
+    expect(noFavoriteBtn).toBeInTheDocument();
+  });
+
+  it('removes video from favorites if it is currently saved', () => {
+    renderWithRouter(
+      <SessionDataProvider mockLogIn mockFavorite={items[0]}>
+        <SelectedVideoProvider>
+          <VideoCard videoItem={items[0]} asFavorite />
+        </SelectedVideoProvider>
+      </SessionDataProvider>
+    );
+
+    const noFavoriteBtn = screen.getByTestId('noFavoriteBtn');
+    fireEvent.click(noFavoriteBtn);
+
+    const makeFavoriteBtn = screen.getByTestId('makeFavoriteBtn');
+    expect(makeFavoriteBtn).toBeInTheDocument();
+  });
 });

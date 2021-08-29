@@ -77,6 +77,7 @@ export const FavoriteVideosGrid = styled.div`
     min-height: calc(100vh - ${titleHeight} - ${infoAreaWidth});
     height: auto;
     overflow: auto;
+    justify-content: center;
   }
 `;
 

@@ -57,11 +57,21 @@ const VideoCard = ({ videoItem, asFavorite }) => {
       {sessionData.isLoggedIn && (
         <ButtonContainer className="btn-container">
           {isFavorite ? (
-            <Button width="120px" danger onClick={removeVideo.bind(this, videoItem)}>
+            <Button
+              width="120px"
+              danger
+              onClick={removeVideo.bind(this, videoItem)}
+              data-testid="noFavoriteBtn"
+            >
               Remove
             </Button>
           ) : (
-            <Button width="180px" primary onClick={addVideo.bind(this, videoItem)}>
+            <Button
+              width="180px"
+              primary
+              onClick={addVideo.bind(this, videoItem)}
+              data-testid="makeFavoriteBtn"
+            >
               Add to favorites
             </Button>
           )}

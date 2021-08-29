@@ -18,7 +18,7 @@ describe('FavoriteVideosPlayerPage', () => {
 
   beforeEach(() => {
     renderWithContext(
-      <SessionDataProvider mockLogIn>
+      <SessionDataProvider mockLogIn mockFavorite={items[0]}>
         <SelectedVideoProvider>
           <FavoriteVideosPlayerPage
             match={{ params: { videoId: items[0].id.videoId } }}

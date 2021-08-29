@@ -18,7 +18,7 @@ export const DropdownMenuContainer = styled.div`
 
   @media only screen and (max-width: 600px) {
     width: 100%;
-    right: 0;
+    left: 0;
   }
 `;
 

@@ -12,11 +12,12 @@ import {
   Right,
   UserProfileButton,
 } from './Navbar.components';
-import { useActiveDropdown } from '../../global-context';
+import { useActiveDropdown, useSessionData } from '../../global-context';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 
 const Navbar = ({ updateVideos, setCurrentPage }) => {
   const { activeDropdown, setActiveDropdown } = useActiveDropdown();
+  const { sessionData } = useSessionData();
 
   const onUserButtonClick = (e) => {
     if (activeDropdown !== 'account') {
@@ -39,7 +40,11 @@ const Navbar = ({ updateVideos, setCurrentPage }) => {
       <Header data-testid="header">
         <Nav>
           <Left>
-            <BurgerMenuButton onClick={onMenuButtonClick} id="menu-button">
+            <BurgerMenuButton
+              onClick={onMenuButtonClick}
+              id="menu-button"
+              data-testid="menu-button"
+            >
               <FontAwesomeIcon icon={faBars} size="2x" color="white" />
             </BurgerMenuButton>
             <SearchBar
@@ -58,8 +63,16 @@ const Navbar = ({ updateVideos, setCurrentPage }) => {
                 />
               </FormGroup>
             </Hidden>
-            <UserProfileButton id="profile-button" onClick={onUserButtonClick}>
-              <FontAwesomeIcon icon={faUser} size="2x" color="#333" />
+            <UserProfileButton
+              id="profile-button"
+              data-testid="profile-button"
+              onClick={onUserButtonClick}
+            >
+              {sessionData.isLoggedIn ? (
+                <img src={sessionData.avatarUrl} alt="User avatar" />
+              ) : (
+                <FontAwesomeIcon icon={faUser} size="2x" color="#333" />
+              )}
             </UserProfileButton>
           </Right>
         </Nav>

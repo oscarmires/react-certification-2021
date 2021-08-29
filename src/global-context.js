@@ -209,16 +209,25 @@ function sessionDataReducer(state, action) {
   }
 }
 
-function SessionDataProvider({ children, mockLogIn }) {
+function SessionDataProvider({ children, mockLogIn, mockFavorite }) {
   const initialState = mockLogIn
-    ? {
-        isLoggedIn: true,
-        id: '123',
-        name: 'Wizeline',
-        avatarUrl:
-          'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
-        favoriteVideos: items,
-      }
+    ? mockFavorite
+      ? {
+          isLoggedIn: true,
+          id: '123',
+          name: 'Wizeline',
+          avatarUrl:
+            'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+          favoriteVideos: [mockFavorite],
+        }
+      : {
+          isLoggedIn: true,
+          id: '123',
+          name: 'Wizeline',
+          avatarUrl:
+            'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+          favoriteVideos: [],
+        }
     : {
         isLoggedIn: false,
         id: '',

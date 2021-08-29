@@ -19,7 +19,7 @@ function AccountPopUp() {
   }, [activeDropdown]);
 
   return (
-    <AccountPopUpContainer style={{ display: displayVal }}>
+    <AccountPopUpContainer style={{ display: displayVal }} data-testid="accountPopUp">
       {sessionData.isLoggedIn ? <UserMenu /> : <LoginForm />}
     </AccountPopUpContainer>
   );

@@ -126,11 +126,16 @@ const VideoDetailsPage = ({ relatedVideos, setRelatedVideos, match }) => {
           <h1>{selectedVideo.snippet && selectedVideo.snippet.title}</h1>
           {sessionData.isLoggedIn &&
             (checkIsFavorite(videoId) ? (
-              <Button danger onClick={removeVideo}>
+              <Button danger onClick={removeVideo} data-testid="noFavoriteBtn">
                 Remove from favorites
               </Button>
             ) : (
-              <Button primary onClick={addVideo} id="add-favorite-btn">
+              <Button
+                primary
+                onClick={addVideo}
+                id="add-favorite-btn"
+                data-testid="makeFavoriteBtn"
+              >
                 Add to favorites
               </Button>
             ))}

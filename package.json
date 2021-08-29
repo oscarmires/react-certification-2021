@@ -20,10 +20,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
-    "test:coverage-text": "jest --coverage && istanbul report --include coverage/coverage-final.json text > coverage.txt",
+    "test": "jest --env=jest-environment-jsdom-sixteen",
+    "test:coverage": "jest --coverage --env=jest-environment-jsdom-sixteen",
+    "test:watch": "jest --watch --env=jest-environment-jsdom-sixteen",
+    "test:coverage-text": "jest --env=jest-environment-jsdom-sixteen --coverage && istanbul report --include coverage/coverage-final.json text > coverage.txt",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --ext .js,.jsx",
     "lint:fix": "eslint ./src --ext .js,.jsx --fix"
@@ -42,6 +42,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "istanbul": "^0.4.5",
+    "jest-environment-jsdom-sixteen": "^2.0.0",
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.1",
     "pretty-quick": "^3.0.0"

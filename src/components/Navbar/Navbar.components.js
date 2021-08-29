@@ -54,8 +54,16 @@ export const UserProfileButton = styled.button`
   border-radius: 8px;
   border: none;
   background-color: darkgray;
+  padding: 0;
 
   &:hover {
     cursor: pointer;
+  }
+
+  & img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 `;

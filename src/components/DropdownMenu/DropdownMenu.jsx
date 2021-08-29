@@ -49,7 +49,7 @@ function DropdownMenu() {
   };
 
   return (
-    <DropdownMenuContainer style={{ display: displayVal }}>
+    <DropdownMenuContainer style={{ display: displayVal }} data-testid="dropdown-menu">
       <MenuText>Site navigation</MenuText>
       <Section id="site-navigation">
         <MenuItem onClick={goHome}>Home</MenuItem>

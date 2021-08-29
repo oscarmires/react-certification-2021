@@ -62,7 +62,7 @@ export const VideoInfoArea = styled.div`
 `;
 
 export const VideoList = styled.div`
-  height: 100%;
+  min-height: 100%;
   min-width: 400px;
   max-width: 400px;
   border-left: 1px solid ${(props) => props.theme.borderColor};

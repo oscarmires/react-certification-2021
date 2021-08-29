@@ -51,7 +51,7 @@ function ProfilePage() {
               Avatar url: <a href={sessionData.avatarUrl}>Link</a>
             </p>
           </AccountInfoArea>
-          <FavoriteVideosGrid>
+          <FavoriteVideosGrid data-testid="favorite-videos-grid">
             <h2>Favorite videos</h2>
             {sessionData.favoriteVideos.length > 0 ? (
               sessionData.favoriteVideos.map((item) => (
@@ -64,7 +64,11 @@ function ProfilePage() {
         </>
       ) : (
         <DefaultArea>
-          <LoginMessage onClick={showLogIn} id="login-message">
+          <LoginMessage
+            onClick={showLogIn}
+            id="login-message"
+            data-testid="login-message"
+          >
             <span style={{ textDecoration: 'underline' }}>Log in</span> to enter this
             page.
           </LoginMessage>
