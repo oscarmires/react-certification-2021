@@ -26,7 +26,8 @@
     "test:coverage-text": "jest --env=jest-environment-jsdom-sixteen --coverage && istanbul report --include coverage/coverage-final.json text > coverage.txt",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --ext .js,.jsx",
-    "lint:fix": "eslint ./src --ext .js,.jsx --fix"
+    "lint:fix": "eslint ./src --ext .js,.jsx --fix",
+    "deploy:surge": "npm run build && mv build/index.html build/200.html && surge build https://react-challenge-oscarmires.surge.sh"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.14.5",
