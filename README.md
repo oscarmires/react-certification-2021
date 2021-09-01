@@ -1,3 +1,3 @@
-# Wizeline Academy - 2021 React Bootcamp
+# Online Video Player: React challenge 2021
 
-Please refere to the following [GIST](https://gist.github.com/villacoder/9f980254461fa8bfbe93067db2126872) for further instructions
+Preview available at https://react-challenge-oscarmires.surge.sh
